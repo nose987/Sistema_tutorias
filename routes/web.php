@@ -16,6 +16,10 @@ Route::view('encuesta', 'encuesta')
     ->middleware(['auth', 'verified'])
     ->name('encuesta');
 
+Route::view('canalizaciones', 'canalizaciones')
+    ->middleware(['auth', 'verified'])
+    ->name('canalizaciones');
+
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
 
