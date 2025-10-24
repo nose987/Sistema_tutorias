@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 use Livewire\Volt\Volt;
+use App\Http\Controllers\CanalizacionController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -16,7 +17,7 @@ Route::view('encuesta', 'encuesta')
     ->middleware(['auth', 'verified'])
     ->name('encuesta');
 
-Route::view('canalizaciones', 'canalizaciones')
+Route::get('canalizaciones', [CanalizacionController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('canalizaciones');
 
