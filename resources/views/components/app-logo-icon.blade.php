@@ -7,4 +7,4 @@
     />
 </svg>-->
 
-<img src="{{ 'images/logo_utesc.png' }}" alt="logo">
+<img src="{{ asset('images/logo_utesc.png') }}" alt="logo">
