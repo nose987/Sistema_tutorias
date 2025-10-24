@@ -7,4 +7,4 @@
     />
 </svg>-->
 
-<img src="{{ asset('images/logo_utesc.png') }}" alt="logo">
+<img src="{{ asset('images/logo_utesc.png') }}" alt="Logo de la Universidad Tecnológica de Escuinapa">
