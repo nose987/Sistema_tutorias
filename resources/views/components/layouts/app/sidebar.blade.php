@@ -18,7 +18,11 @@
             </flux:navlist>
 
             <flux:navlist variant="outline">
-                    <flux:navlist.item icon="rectangle-stack" :href="route('encuesta')" :current="request()->routeIs('encuesta')" wire:navigate>{{ __('Encuestas y actividades') }}</flux:navlist.item>
+                    <flux:navlist.item icon="clipboard" :href="route('encuesta')" :current="request()->routeIs('encuesta')" wire:navigate>{{ __('Encuestas') }}</flux:navlist.item>
+            </flux:navlist>
+
+            <flux:navlist variant="outline">
+                    <flux:navlist.item icon="presentation-chart-bar" :href="route('actividades')" :current="request()->routeIs('actividades')" wire:navigate>{{ __('Actividades') }}</flux:navlist.item>
             </flux:navlist>
 
             <flux:navlist variant="outline">

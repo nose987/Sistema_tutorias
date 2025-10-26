@@ -16,6 +16,10 @@ Route::view('encuesta', 'encuesta')
     ->middleware(['auth', 'verified'])
     ->name('encuesta');
 
+Route::view('actividades', 'actividades')
+    ->middleware(['auth', 'verified'])
+    ->name('actividades');
+
 Route::view('canalizaciones', 'canalizaciones')
     ->middleware(['auth', 'verified'])
     ->name('canalizaciones');
