@@ -46,11 +46,11 @@
                                 <thead class="bg-[#2B8A7F] text-xs text-white uppercase rounded-t-lg">
                                     {{-- Encabezados de la tabla --}}
                                     <tr>
-                                        <th scope="col" class="px-6 py-3 font-semibold">Nombre</th>
+                                        <th scope="col" class="px-6 py-3 font-semibold rounded-tl">Nombre</th>
                                         <th scope="col" class="px-6 py-3 font-semibold">Tipo</th>
                                         <th scope="col" class="px-6 py-3 font-semibold">Fecha y Hora</th>
                                         <th scope="col" class="px-6 py-3 font-semibold text-center">Asistentes</th>
-                                        <th scope="col" class="px-6 py-3 font-semibold text-right">Acciones</th>
+                                        <th scope="col" class="px-6 py-3 font-semibold text-right rounded-tr">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
