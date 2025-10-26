@@ -73,9 +73,8 @@
                                 </div>
                                 <a href="{{-- ruta para nueva encuesta --}}"
                                    class="mt-3 sm:mt-0 flex items-center space-x-2 px-4 py-2 text-sm font-medium text-white bg-[#2B8A7F] border border-transparent rounded-lg shadow-sm hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
-                                    </svg>
+                                    
+                                    <flux:icon.plus />  
                                     <span>Copiar link de encuesta</span>
                                 </a>
                            </div>
@@ -137,9 +136,6 @@
         <a href="{{-- ruta para ver todas las respuestas --}}"
            class="inline-flex items-center px-4 py-2 text-sm font-medium text-teal-600 dark:text-teal-400 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-700 rounded-lg shadow-sm hover:bg-gray-50 dark:hover:bg-neutral-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 transition-colors">
             Ver Todas las Respuestas
-            <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
         </a>
     </div>
 </div>
@@ -148,7 +144,7 @@
                     </div>
 
                     {{-- Pestaña Actividades y Pláticas --}}
-                     <div x-show="activeTab === 'actividades'" x-transition>
+                     <div x-cloak x-show="activeTab === 'actividades'" x-transition>
                         <div class="bg-white dark:bg-neutral-900 rounded-lg shadow-sm border border-gray-200 dark:border-neutral-700">
                            <div class="p-6 border-b border-gray-200 dark:border-neutral-700 flex flex-col sm:flex-row justify-between items-start sm:items-center">
                                 <div>
@@ -157,9 +153,7 @@
                                 </div>
                                  <a href="{{-- ruta para nueva actividad --}}"
                                    class="mt-3 sm:mt-0 flex items-center space-x-2 px-4 py-2 text-sm font-medium text-white bg-[#2B8A7F] border border-transparent rounded-lg shadow-sm hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
-                                    </svg>
+                                    <flux:icon.plus />  
                                     <span>Nueva Actividad</span>
                                 </a>
                            </div>
@@ -194,12 +188,7 @@
                 <td class="px-6 py-4 whitespace-nowrap">
                     <div class="flex items-center space-x-2 text-gray-700 dark:text-neutral-300">
                         {{-- Icono Calendario (Lucide) --}}
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar text-gray-500 dark:text-neutral-400">
-                            <path d="M8 2v4"/>
-                            <path d="M16 2v4"/>
-                            <rect width="18" height="18" x="3" y="4" rx="2"/>
-                            <path d="M3 10h18"/>
-                        </svg>
+                        <flux:icon.calendar variant="micro" />
                         <span>
                             {{-- Formatear fecha: \Carbon\Carbon::parse('2025-01-20')->translatedFormat('j M Y') --}}
                             20 ene 2025 - 10:00
@@ -209,12 +198,7 @@
                 <td class="px-6 py-4 text-center">
                    <div class="flex items-center justify-center space-x-2 text-gray-700 dark:text-neutral-300">
                        {{-- Icono Usuarios (Lucide) --}}
-                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users text-gray-500 dark:text-neutral-400">
-                           <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-                           <circle cx="9" cy="7" r="4"/>
-                           <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
-                           <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                       </svg>
+                       <flux:icon.users variant="micro" />  
                        <span>45</span>
                    </div>
                 </td>
@@ -222,11 +206,11 @@
                     <div class="flex justify-end items-center space-x-3">
                         {{-- Botón Ver Detalles (Lucide Eye) --}}
                         <a href="{{-- route('actividades.show', 1) --}}" class="text-gray-500 dark:text-neutral-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors" title="Ver detalles">
-                           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                            <flux:icon.eye variant="micro" />                        
                         </a>
                         {{-- Botón Editar (Lucide Pencil) --}}
                         <button class="text-gray-500 dark:text-neutral-400 hover:text-green-600 dark:hover:text-green-400 transition-colors" title="Editar">
-                           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pencil"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
+                           <flux:icon.pencil-square variant="micro" />
                         </button>
                     </div>
                 </td>
@@ -244,33 +228,23 @@
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
                    <div class="flex items-center space-x-2 text-gray-700 dark:text-neutral-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar text-gray-500 dark:text-neutral-400">
-                            <path d="M8 2v4"/>
-                            <path d="M16 2v4"/>
-                            <rect width="18" height="18" x="3" y="4" rx="2"/>
-                            <path d="M3 10h18"/>
-                        </svg>
+                        <flux:icon.calendar variant="micro" />
                         <span>18 ene 2025 - 14:00</span>
                     </div>
                 </td>
                 <td class="px-6 py-4 text-center">
                     <div class="flex items-center justify-center space-x-2 text-gray-700 dark:text-neutral-300">
-                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users text-gray-500 dark:text-neutral-400">
-                           <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-                           <circle cx="9" cy="7" r="4"/>
-                           <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
-                           <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                       </svg>
+                       <flux:icon.users variant="micro" />  
                        <span>32</span>
                    </div>
                 </td>
                 <td class="px-6 py-4">
                      <div class="flex justify-end items-center space-x-3">
                         <a href="{{-- route('actividades.show', 2) --}}" class="text-gray-500 dark:text-neutral-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors" title="Ver detalles">
-                           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                            <flux:icon.eye variant="micro" />                        
                         </a>
                         <button class="text-gray-500 dark:text-neutral-400 hover:text-green-600 dark:hover:text-green-400 transition-colors" title="Editar">
-                           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pencil"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
+                           <flux:icon.pencil-square variant="micro" />
                         </button>
                     </div>
                 </td>
@@ -288,34 +262,23 @@
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
                     <div class="flex items-center space-x-2 text-gray-700 dark:text-neutral-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar text-gray-500 dark:text-neutral-400">
-                            <path d="M8 2v4"/>
-                            <path d="M16 2v4"/>
-                            <rect width="18" height="18" x="3" y="4" rx="2"/>
-                            <path d="M3 10h18"/>
-                        </svg>
+                        <flux:icon.calendar variant="micro" />
                         <span>15 ene 2025 - 11:00</span>
                     </div>
                 </td>
                 <td class="px-6 py-4 text-center">
                     <div class="flex items-center justify-center space-x-2 text-gray-700 dark:text-neutral-300">
-                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users text-gray-500 dark:text-neutral-400">
-                           <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-                           <circle cx="9" cy="7" r="4"/>
-                           <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
-                           <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                       </svg>
+                       <flux:icon.users variant="micro" />  
                        <span>67</span>
                    </div>
                 </td>
                 <td class="px-6 py-4">
                     <div class="flex justify-end items-center space-x-3">
                         <a href="{{-- route('actividades.show', 3) --}}" class="text-gray-500 dark:text-neutral-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors" title="Ver detalles">
-                           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                           <flux:icon.eye variant="micro" />
                         </a>
                         <button class="text-gray-500 dark:text-neutral-400 hover:text-green-600 dark:hover:text-green-400 transition-colors" title="Editar">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pencil"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
-                        </button>
+                            <flux:icon.pencil-square variant="micro" />
                     </div>
                 </td>
             </tr>
