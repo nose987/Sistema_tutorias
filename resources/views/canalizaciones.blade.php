@@ -1,6 +1,6 @@
 <x-layouts.app :title="__('Canalizaciones')">
 
-    <div class="flex h-screen overflow-hidden">
+    <div class="flex">
 
         <main class="flex-1 p-6 md:p-8 bg-slate-50 dark:bg-[#262626] overflow-y-auto" x-data="{ activeTab: 'canalizaciones'}">
 
@@ -34,7 +34,7 @@
                 <div
                     class="bg-white dark:bg-neutral-900 p-6 rounded-lg shadow-sm border border-gray-200 dark:border-neutral-700">
                     <p class="text-sm font-medium text-gray-500 dark:text-neutral-400">Total Canalizaciones</p>
-                    <p class="text-3xl font-bold text-gray-800 dark:text-neutral-100 mt-2">23</p>
+                    <p class="text-3xl font-bold text-gray-800 dark:text-neutral-100 mt-2">{{ $total_canalizaciones }}</p>
                     <p class="text-sm text-gray-400 dark:text-neutral-500 mt-1">Este cuatrimestre</p>
                 </div>
                 <div
@@ -46,8 +46,8 @@
                 <div
                     class="bg-white dark:bg-neutral-900 p-6 rounded-lg shadow-sm border border-gray-200 dark:border-neutral-700">
                     <p class="text-sm font-medium text-gray-500 dark:text-neutral-400">Motivo Más Común</p>
-                    <p class="text-2xl font-bold text-gray-800 dark:text-neutral-100 mt-2">Psicológico</p>
-                    <p class="text-sm text-gray-400 dark:text-neutral-500 mt-1">8 canalizaciones</p>
+                    <p class="text-2xl font-bold text-gray-800 dark:text-neutral-100 mt-2">{{ $motivo_comun->nombre }}</p>
+                    <p class="text-sm text-gray-400 dark:text-neutral-500 mt-1">{{ $motivo_comun->total }} canalizaciones</p>
                 </div>
             </div>
 

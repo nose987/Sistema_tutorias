@@ -17,7 +17,7 @@
             wire:ignore.self
         >
             <div 
-                class="bg-white rounded-lg shadow-xl max-w-md w-full p-6"
+                class="dark:bg-neutral-900 bg-white rounded-lg shadow-xl max-w-md w-full p-6"
                 x-show="show"
                 x-transition:enter="ease-out duration-300"
                 x-transition:enter-start="opacity-0 scale-95"
@@ -30,13 +30,13 @@
 
                 <div class="flex justify-between items-start mb-4">
                     <div>
-                        <h2 class="text-xl font-bold text-gray-900">Nueva Canalización</h2>
-                        <p class="text-sm text-gray-600 mt-1">Busca al alumno y especifica el motivo de la canalización
+                        <h2 class="text-xl font-bold text-gray-900 dark:text-white">Nueva Canalización</h2>
+                        <p class="text-sm dark:text-white text-gray-600 mt-1">Busca al alumno y especifica el motivo de la canalización
                         </p>
                     </div>
 
                     <button wire:click="closeModal" type="button"
-                        class="text-gray-400 hover:text-gray-600 transition-colors">
+                        class="text-gray-400 dark:text-white hover:text-gray-600 transition-colors">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -47,12 +47,12 @@
                 <div class="space-y-4">
 
                     <div class="relative">
-                        <label for="search-student" class="block text-sm font-medium text-gray-700 mb-1">
+                        <label for="search-student" class="block text-sm font-medium text-gray-700 dark:text-white mb-1">
                             Nombre completo del alumno
                         </label>
                         <div class="relative">
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none"
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 dark:text-white text-gray-400" fill="none"
                                     viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round"
                                         d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -72,22 +72,22 @@
                         {{-- LA LISTA DE RESULTADOS --}}
                         @if (count($alumnosResult) > 0)
                             <div
-                                class="absolute z-10 w-full bg-white border border-gray-200 rounded-b-lg shadow-lg mt-1 max-h-60 overflow-y-auto">
+                                class="absolute z-10 w-full bg-white dark:bg-[#262626] border border-gray-200 dark:border-gray-700 rounded-b-lg shadow-lg mt-1 max-h-60 overflow-y-auto">
                                 <ul>
                                     @foreach ($alumnosResult as $alumno)
                                         <li 
                                             wire:click="selectAlumno({{ $alumno->pk_alumno }})"
-                                            class="flex items-center p-3 hover:bg-gray-100 cursor-pointer border-b border-gray-100"
+                                            class="flex items-center p-3 hover:bg-gray-100 dark:hover:bg-neutral-800 cursor-pointer border-b border-gray-100 dark:border-gray-700"
                                         >
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 mr-3" viewBox="0 0 20 20" fill="currentColor">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 dark:text-white text-gray-400 mr-3" viewBox="0 0 20 20" fill="currentColor">
                                                 <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
                                             </svg>
                                             
                                             <div>
-                                                <p class="text-sm font-semibold text-gray-800">
+                                                <p class="text-sm font-semibold dark:text-white text-gray-800">
                                                     {{ $alumno->nombre }} {{ $alumno->apellido_paterno }} {{ $alumno->apellido_materno }}
                                                 </p>
-                                                <p class="text-xs text-gray-500">
+                                                <p class="text-xs dark:text-white text-gray-500">
                                                     <span>{{ $alumno->pk_alumno }}</span>
                                                     <span class="mx-1.5">•</span>
                                                     <span>{{ $alumno->nombre_grupo }}</span>
@@ -200,7 +200,7 @@
                             </div>
                         </div>
                         <p class="text-xs text-gray-500 mt-1">
-                            Selecciona la categoría principal. Podrás especificar los detalles en el siguiente paso.
+                            
                         </p>
                         @error('selectedMotivoId')
                             <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
