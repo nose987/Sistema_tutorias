@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 use Livewire\Volt\Volt;
+use App\Http\Controllers\EncuestaController;
+use App\Http\Controllers\DashboardEncuestaController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -12,13 +14,20 @@ Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
-Route::view('encuesta', 'encuesta')
+Route::get('encuestas', [DashboardEncuestaController::class, 'index'])
     ->middleware(['auth', 'verified'])
-    ->name('encuesta');
+    ->name('encuestas');
+
+Route::post('encuestas/settings', [DashboardEncuestaController::class, 'updateAlumnosEsperados'])
+    ->middleware(['auth', 'verified'])
+    ->name('encuestas.settings.update');
 
 Route::view('actividades', 'actividades')
     ->middleware(['auth', 'verified'])
     ->name('actividades');
+
+Route::get('encuesta', [EncuestaController::class, 'create'])->name('encuesta.create');
+Route::post('encuesta', [EncuestaController::class, 'store'])->name('encuesta.store');
 
 Route::view('canalizaciones', 'canalizaciones')
     ->middleware(['auth', 'verified'])
