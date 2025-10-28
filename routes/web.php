@@ -5,6 +5,7 @@ use Laravel\Fortify\Features;
 use Livewire\Volt\Volt;
 use App\Http\Controllers\EncuestaController;
 use App\Http\Controllers\DashboardEncuestaController;
+use App\Http\Controllers\CanalizacionController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -29,7 +30,7 @@ Route::view('actividades', 'actividades')
 Route::get('encuesta', [EncuestaController::class, 'create'])->name('encuesta.create');
 Route::post('encuesta', [EncuestaController::class, 'store'])->name('encuesta.store');
 
-Route::view('canalizaciones', 'canalizaciones')
+Route::get('canalizaciones', [CanalizacionController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('canalizaciones');
 
