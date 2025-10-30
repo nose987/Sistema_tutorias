@@ -22,7 +22,7 @@ class CrearCanalizacionModal extends Component
     public bool $showModal = false;
     public $motivos = [];
     public $search = '';
-    public $selectedMotivoId = null;
+    public $selectedMotivoId = '';
     public $selectedAlumno = null;
     public $selectedAlumnoId = null;
 
@@ -61,7 +61,7 @@ class CrearCanalizacionModal extends Component
     public function resetForm()
     {
         $this->search = '';
-        $this->selectedMotivoId = null;
+        $this->selectedMotivoId = '';
         $this->selectedAlumno = null;
         $this->selectedAlumnoId = null;
         $this->resetValidation(); // Limpia los errores de validación

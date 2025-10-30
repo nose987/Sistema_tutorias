@@ -11,7 +11,7 @@
                     <p class="text-sm text-gray-500 dark:text-neutral-400 mt-1">Información de canalizaciones y bajas</p>
                 </div>
                 <div class="flex items-center space-x-3 mt-4 md:mt-0">
-                    <button
+                    <button x-cloak
                         class="flex items-center space-x-2 px-4 py-2 text-sm font-medium text-gray-700 dark:text-neutral-200 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-700 rounded-lg shadow-sm hover:bg-gray-50 dark:hover:bg-neutral-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 transition-colors">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor" stroke-width="2">
@@ -51,7 +51,7 @@
                 </div>
             </div>
 
-            <div x-data="{ activeTab: 'canalizaciones' }">
+            <div x-cloak x-data="{ activeTab: 'canalizaciones' }">
                 <div class="mb-6">
                     <div class="border-b border-gray-200 dark:border-neutral-700">
                         <nav class="-mb-px flex space-x-4">
@@ -103,17 +103,17 @@
                                         {{-- 1. Alumno (Usando el Accessor 'nombre_completo') --}}
                                         <th scope="row"
                                             class="px-6 py-4 font-medium text-gray-900 dark:text-neutral-100 whitespace-nowrap">
-                                            {{ $canalizacion->alumno->nombre_completo }}
+                                            {{ $canalizacion->alumno?->nombre_completo ?? 'N/A' }}
                                         </th>
                                         
                                         {{-- 2. Grupo (Desde la relación anidada) --}}
                                         <td class="px-6 py-4">
-                                            {{ $canalizacion->alumno->grupo->nombre_grupo }}
+                                            {{ $canalizacion->alumno?->grupo?->nombre_grupo ?? 'N/A' }}
                                         </td>
                                         
                                         {{-- 3. Motivo (Desde la relación) --}}
                                         <td class="px-6 py-4">
-                                            {{ $canalizacion->motivo->nombre }}
+                                            {{ $canalizacion->motivo?->nombre ?? 'N/A' }}
                                         </td>
                                         
                                         {{-- 4. Fecha (Formateada con Carbon) --}}

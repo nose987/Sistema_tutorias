@@ -11,6 +11,7 @@ class CanalizacionController extends Controller
     public function index()
     {
         $canalizaciones = Canalizacion::with(['alumno.grupo', 'motivo'])
+                            ->whereHas('alumno') // Asegura que el alumno exista
                             ->where('estatus', 'Activa') // Opcional: solo muestra las activas
                             ->get();
 

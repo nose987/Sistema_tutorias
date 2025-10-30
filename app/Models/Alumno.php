@@ -76,4 +76,9 @@ class Alumno extends Model
     {
         return $this->hasOne(InformacionExtra::class, 'fk_alumno', 'pk_alumno');
     }
+
+    public function getNombreCompletoAttribute()
+    {
+        return "{$this->nombre} {$this->apellido_paterno} {$this->apellido_materno}";
+    }
 }

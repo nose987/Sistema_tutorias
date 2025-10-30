@@ -48,24 +48,48 @@
                             <h3 class="font-bold text-lg text-gray-800 dark:text-neutral-100">Gestión de Encuestas</h3>
                             <p class="text-sm text-gray-500 dark:text-neutral-400 mt-1">Copia el link para compartir con tus tutorados</p>
                         </div>
-                        <a href="{{-- ruta para nueva encuesta --}}"
-                           class="mt-3 sm:mt-0 flex items-center space-x-2 px-4 py-2 text-sm font-medium text-white bg-[#2B8A7F] border border-transparent rounded-lg shadow-sm hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">
-                            
-                            <flux:icon.clipboard variant="micro"/>  
-                            <span>Copiar link de encuesta</span>
-                        </a>
+                        <button
+                            x-data="{
+                                copied: false,
+                                copyToClipboard() {
+                                    navigator.clipboard.writeText('{{ route('encuesta.create') }}').then(() => {
+                                        this.copied = true;
+                                        setTimeout(() => { this.copied = false }, 2000);
+                                    });
+                                }
+                            }"
+                            @click.prevent="copyToClipboard"
+                            class="mt-3 sm:mt-0 flex items-center space-x-2 px-4 py-2 text-sm font-medium text-white bg-[#2B8A7F] border border-transparent rounded-lg shadow-sm hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition-colors"
+                        >
+                            <flux:icon.clipboard variant="micro"/>
+                            <span x-show="!copied">Copiar link de encuesta</span>
+                            <span x-show="copied" style="display: none;">¡Copiado!</span>
+                        </button>
                    </div>
                    <div class="p-6">
                         <div class="mt-4 space-y-4">
                             <h4 class="text-md font-semibold text-gray-700 dark:text-neutral-300">Últimas Respuestas Recibidas</h4>
 
                             <ul class="space-y-3">
+                                @php
+                                    $colors = [
+                                        ['bg' => 'bg-blue-100 dark:bg-blue-900/50', 'text' => 'text-blue-800 dark:text-blue-100'],
+                                        ['bg' => 'bg-green-100 dark:bg-green-900/50', 'text' => 'text-green-800 dark:text-green-100'],
+                                        ['bg' => 'bg-orange-100 dark:bg-orange-900/50', 'text' => 'text-orange-800 dark:text-orange-100'],
+                                        ['bg' => 'bg-purple-100 dark:bg-purple-900/50', 'text' => 'text-purple-800 dark:text-purple-100'],
+                                        ['bg' => 'bg-teal-100 dark:bg-teal-900/50', 'text' => 'text-teal-800 dark:text-teal-100'],
+                                        ['bg' => 'bg-red-100 dark:bg-red-900/50', 'text' => 'text-red-800 dark:text-red-100'],
+                                        ['bg' => 'bg-yellow-100 dark:bg-yellow-900/50', 'text' => 'text-yellow-800 dark:text-yellow-100'],
+                                    ];
+                                @endphp
                                 @forelse ($ultimos_alumnos as $alumno)
+                                    @php
+                                        $color = $colors[array_rand($colors)];
+                                    @endphp
                                     <li class="flex items-center justify-between p-3 bg-gray-50 dark:bg-neutral-800 rounded-lg border border-gray-200 dark:border-neutral-700">
                                         <div class="flex items-center space-x-3">
-                                            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-teal-100 dark:bg-teal-700 flex items-center justify-center">
-                                                <span class="text-sm font-medium text-teal-800 dark:text-teal-100">
-                                                    {{-- Genera iniciales del nombre y apellido paterno --}}
+                                            <div class="flex-shrink-0 w-8 h-8 rounded-full {{ $color['bg'] }} flex items-center justify-center">
+                                                <span class="text-sm font-medium {{ $color['text'] }}">
                                                     {{ strtoupper(substr($alumno->nombre, 0, 1) . substr($alumno->apellido_paterno, 0, 1)) }}
                                                 </span>
                                             </div>
