@@ -32,7 +32,7 @@
                             {{ $canalizacion->alumno->nombre_completo }} - {{ $canalizacion->alumno->pk_alumno }}
                         </p>
                     </div>
-                    {{-- Botones del encabezado --}}
+                    {{-- Botones del encabezado 
                     <div class="flex items-center space-x-3">
                         <button
                             class="flex items-center space-x-2 px-4 py-2 text-sm font-medium text-gray-700 dark:text-neutral-200 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-700 rounded-lg shadow-sm hover:bg-gray-50 dark:hover:bg-neutral-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 transition-colors">
@@ -52,7 +52,7 @@
                             </svg>
                             <span>Descargar PDF</span>
                         </button>
-                    </div>
+                    </div>--}}
                 </div>
             </header>
 
@@ -138,7 +138,7 @@
                         class="bg-white dark:bg-neutral-800 rounded-lg shadow-sm border border-gray-200 dark:border-neutral-700 p-6">
                         <h2 class="text-xl font-semibold text-gray-800 dark:text-neutral-100 mb-4">Acciones</h2>
                         <div class="space-y-3">
-                            {{-- Action buttons (functionality not implemented yet) --}}
+                            {{-- Action buttons (functionality not implemented yet) 
                             <button type="button"
                                 class="w-full text-left px-4 py-3 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-700 rounded-lg text-sm font-medium text-gray-700 dark:text-neutral-200 hover:bg-gray-50 dark:hover:bg-neutral-700 transition-colors focus:outline-none focus:ring-2 focus:ring-teal-500">
                                 Editar Canalización
@@ -146,7 +146,7 @@
                             <button type="button"
                                 class="w-full text-left px-4 py-3 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-700 rounded-lg text-sm font-medium text-gray-700 dark:text-neutral-200 hover:bg-gray-50 dark:hover:bg-neutral-700 transition-colors focus:outline-none focus:ring-2 focus:ring-teal-500">
                                 Agregar Seguimiento
-                            </button>
+                            </button>--}}
                             <a href="{{ route('alumnos.historial', $canalizacion->alumno) }}"
                                 class="block w-full text-left px-4 py-3 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-700 rounded-lg text-sm font-medium text-gray-700 dark:text-neutral-200 hover:bg-gray-50 dark:hover:bg-neutral-700 transition-colors focus:outline-none focus:ring-2 focus:ring-teal-500">
                                 Ver Historial Completo
