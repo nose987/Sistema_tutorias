@@ -138,20 +138,20 @@ class CrearCanalizacionModal extends Component
     // --- 3. AÑADE EL MÉTODO PARA GUARDAR ---
     public function guardarCanalizacion()
     {
-        // Primero, valida los datos
         $this->validate();
 
-        // Si la validación pasa, crea el registro
-        Canalizacion::create([
+        // --- ¡AÑADE ESTO! ---
+        $nuevaCanalizacion = Canalizacion::create([ // <--- ASÍ
             'fk_alumno' => $this->selectedAlumnoId,
             'fk_motivo_canalizacion' => $this->selectedMotivoId,
-            'fecha_inicio' => Carbon::now(), // Pone la fecha y hora actual
-            'estatus' => 'Activa' //
+            'fecha_inicio' => Carbon::now(),
+            'estatus' => 'Activa'
         ]);
 
-        // Recarga la página actual y envía un mensaje de éxito
-        return redirect(request()->header('Referer'))
-            ->with('status', '¡Canalización registrada con éxito!');
+        $this->showModal = false;
+        
+        // Ahora la variable $nuevaCanalizacion SÍ existe
+        return redirect()->route('canalizaciones.formato.show', $nuevaCanalizacion);
     }
 
     // ... (tu método render() existente)
