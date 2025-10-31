@@ -34,11 +34,18 @@
                             <h3 class="font-bold text-lg text-gray-800 dark:text-neutral-100">Registro de Actividades</h3>
                             <p class="text-sm text-gray-500 dark:text-neutral-400 mt-1">Lista de pláticas y actividades completadas</p>
                         </div>
-                         <a href="{{ route('actividades.create') }}"
-                           class="mt-3 sm:mt-0 flex items-center space-x-2 px-4 py-2 text-sm font-medium text-white bg-[#2B8A7F] border border-transparent rounded-lg shadow-sm hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">
-                            <flux:icon.plus />  
-                            <span>Nueva Actividad</span>
-                        </a>
+                        <div class="flex flex-col sm:flex-row gap-2 mt-3 sm:mt-0">
+                            <a href="{{ route('actividades.reporte') }}"
+                               class="flex items-center space-x-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 dark:bg-neutral-800 dark:border-neutral-600 dark:text-neutral-300 dark:hover:bg-neutral-700">
+                                <flux:icon.arrow-down-on-square-stack />  
+                                <span>Descargar Reporte</span>
+                            </a>
+                            <a href="{{ route('actividades.create') }}"
+                               class="flex items-center space-x-2 px-4 py-2 text-sm font-medium text-white bg-[#2B8A7F] border border-transparent rounded-lg shadow-sm hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">
+                                <flux:icon.plus />  
+                                <span>Nueva Actividad</span>
+                            </a>
+                        </div>
                    </div>
                    <div class="p-6">
                        <div class="overflow-x-auto mt-4">

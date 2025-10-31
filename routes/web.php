@@ -48,6 +48,10 @@ Route::put('actividades/{actividad:pk_actividad}', [ActividadController::class, 
     ->middleware(['auth', 'verified'])
     ->name('actividades.update');
 
+Route::get('actividades/reporte', [ActividadController::class, 'generarReporte'])
+    ->middleware(['auth', 'verified'])
+    ->name('actividades.reporte');
+
 
 
 Route::get('encuesta', [EncuestaController::class, 'create'])->name('encuesta.create');
