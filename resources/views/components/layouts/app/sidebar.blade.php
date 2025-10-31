@@ -18,7 +18,11 @@
             </flux:navlist>
 
             <flux:navlist variant="outline">
-                    <flux:navlist.item icon="rectangle-stack" :href="route('encuesta')" :current="request()->routeIs('encuesta')" wire:navigate>{{ __('Encuesta') }}</flux:navlist.item>
+                    <flux:navlist.item icon="clipboard" :href="route('encuestas')" :current="request()->routeIs('encuestas')" wire:navigate>{{ __('Encuestas') }}</flux:navlist.item>
+            </flux:navlist>
+
+            <flux:navlist variant="outline">
+                    <flux:navlist.item icon="presentation-chart-bar" :href="route('actividades')" :current="request()->routeIs('actividades')" wire:navigate>{{ __('Actividades') }}</flux:navlist.item>
             </flux:navlist>
 
             <flux:navlist variant="outline">
@@ -31,15 +35,7 @@
 
             <flux:spacer />
 
-            <flux:navlist variant="outline">
-                <flux:navlist.item icon="folder-git-2" href="https://github.com/laravel/livewire-starter-kit" target="_blank">
-                {{ __('Repository') }}
-                </flux:navlist.item>
-
-                <flux:navlist.item icon="book-open-text" href="https://laravel.com/docs/starter-kits#livewire" target="_blank">
-                {{ __('Documentation') }}
-                </flux:navlist.item>
-            </flux:navlist>
+            
 
             <!-- Desktop User Menu -->
             <flux:dropdown class="hidden lg:block" position="bottom" align="start">

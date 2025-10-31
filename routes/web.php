@@ -14,6 +14,10 @@ use App\Http\Controllers\ObservacionController;
 | Rutas Públicas
 |--------------------------------------------------------------------------
 */
+use App\Http\Controllers\EncuestaController;
+use App\Http\Controllers\DashboardEncuestaController;
+use App\Http\Controllers\CanalizacionController;
+use App\Http\Controllers\ActividadController;
 
 Route::get('/', function () {
     return view('welcome');
