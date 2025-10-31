@@ -77,4 +77,6 @@ class ActividadController extends Controller
 
         return redirect()->route('actividades')->with('status', 'Actividad actualizada con éxito.');
     }
+
+
 }

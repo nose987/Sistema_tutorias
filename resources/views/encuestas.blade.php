@@ -97,7 +97,7 @@
                                                 {{ $alumno->nombre }} {{ $alumno->apellido_paterno }} {{ $alumno->apellido_materno }}
                                             </span>
                                         </div>
-                                        {{-- Timestamp omitido ya que no hay columna created_at --}}
+                                        <a href="{{ route('encuesta.show', $alumno->pk_alumno) }}" class="px-3 py-1 text-sm font-medium text-white bg-teal-600 rounded-lg hover:bg-teal-700">Ver respuestas</a>
                                     </li>
                                 @empty
                                     <li class="p-3 text-center text-sm text-gray-500 dark:text-neutral-400">

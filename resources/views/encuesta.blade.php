@@ -132,9 +132,14 @@
                             <select name="carrera" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2B8A7F] focus:border-transparent" required>
                                 <option value="">Selecciona una carrera</option>
                                 <option value="Desarrollo y gestión de software">Desarrollo y gestión de software</option>
-                                <option value="Redes digitales">Redes digitales</option>
-                                <option value="Ingeniería industrial">Ingeniería industrial</option>
                                 <option value="Mecatrónica">Mecatrónica</option>
+                                <option value="Contaduría">Contaduría</option>
+                                <option value="Agricultura">Agricultura</option>
+                                <option value="Enfermería">Enfermería</option>
+                                <option value="Gastronomía">Gastronomía</option>
+                                <option value="Mantenimiento">Mantenimiento</option>
+                                <option value="Alimentos">Alimentos</option>
+                                <option value="Turismo">Turismo</option>
                             </select>
                         </div>
                     </div>
@@ -946,3 +951,5 @@
     </script>
 </body>
 </html>
+</x-layouts.app>
+

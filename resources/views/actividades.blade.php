@@ -102,7 +102,5 @@
                    </div>
                 </div>
             </div>
-
-        </main>
     </div>
 </x-layouts.app>

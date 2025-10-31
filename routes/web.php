@@ -48,8 +48,12 @@ Route::put('actividades/{actividad:pk_actividad}', [ActividadController::class, 
     ->middleware(['auth', 'verified'])
     ->name('actividades.update');
 
+
+
 Route::get('encuesta', [EncuestaController::class, 'create'])->name('encuesta.create');
 Route::post('encuesta', [EncuestaController::class, 'store'])->name('encuesta.store');
+Route::get('encuesta/{alumno}', [DashboardEncuestaController::class, 'show'])->middleware(['auth', 'verified'])->name('encuesta.show');
+Route::put('encuesta/{alumno}', [DashboardEncuestaController::class, 'update'])->middleware(['auth', 'verified'])->name('encuesta.update');
 
 Route::get('canalizaciones', [CanalizacionController::class, 'index'])
     ->middleware(['auth', 'verified'])
