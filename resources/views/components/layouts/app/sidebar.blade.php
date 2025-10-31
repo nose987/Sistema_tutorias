@@ -25,6 +25,10 @@
                     <flux:navlist.item icon="rectangle-stack" :href="route('canalizaciones')" :current="request()->routeIs('canalizaciones')" wire:navigate>{{ __('Canalizaciones') }}</flux:navlist.item>
             </flux:navlist>
 
+            <flux:navlist variant="outline">
+                    <flux:navlist.item icon="rectangle-stack" :href="route('grupo')" :current="request()->routeIs('grupo')" wire:navigate>{{ __('Grupo') }}</flux:navlist.item>
+            </flux:navlist>
+
             <flux:spacer />
 
             <flux:navlist variant="outline">
