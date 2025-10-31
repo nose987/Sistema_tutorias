@@ -9,6 +9,14 @@ use App\Models\MotivoBaja;
 use App\Models\Baja;
 use carbon\Carbon;
 
+use App\Models\Actividad;
+use Barryvdh\DomPDF\Facade\Pdf;
+
+
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Symfony\Component\HttpFoundation\StreamedResponse;
+
 
 use App\Models\Alumno;
 use Illuminate\Support\Facades\DB;
@@ -264,5 +272,237 @@ class CanalizacionController extends Controller
         // 9. Si todo salió bien, redirige
         return redirect()->route('canalizaciones')
             ->with('status', "El alumno {$alumno->nombre} ha sido dado de baja exitosamente.");
+    }
+
+    public function exportarInformeFinalPlantilla()
+    {
+        // --- 1. DEFINIR RUTA DE LA PLANTILLA ---
+        $templatePath = storage_path('app/templates/INFORME FINAL.xlsx');
+
+        if (!file_exists($templatePath)) {
+            abort(500, "No se encontró el archivo de plantilla en: {$templatePath}.");
+        }
+
+        try {
+            // --- 2. CARGAR LA PLANTILLA ---
+            $spreadsheet = IOFactory::load($templatePath);
+            $sheet = $spreadsheet->getSheetByName('INFORME FINAL'); // Asegúrate que el nombre de la hoja es EXACTO
+
+            if (!$sheet) {
+                // Si la hoja 'INFORME FINAL' no se encuentra, usa la primera disponible
+                $sheet = $spreadsheet->getActiveSheet();
+            }
+
+            // --- 3. OBTENER DATOS DE LA BD (Filtrado y Agregaciones) ---
+            // Estos datos son un EJEMPLO de cómo se podrían obtener.
+            // Deberías añadir lógica para filtrar por grupo, periodo, etc.
+            
+            // Supongamos un ID de grupo específico para el ejemplo
+            $grupoId = 1; // <--- ¡CAMBIA ESTO O PASALO COMO PARÁMETRO!
+            $tutorNombre = 'L.I. Saúl Mendosa Mandujano'; // <--- ¡CAMBIA ESTO O PASALO COMO PARÁMETRO!
+            $cuatrimestre = 'SEP - DIC 2024'; // <--- ¡CAMBIA ESTO O PASALO COMO PARÁMETRO!
+            $carreraNombre = 'Tecnologías de la Información'; // <--- ¡CAMBIA ESTO O PASALO COMO PARÁMETRO!
+            $nombreGrupo = 'TIC-403'; // <--- ¡CAMBIA ESTO O PASALO COMO PARÁMETRO!
+
+            // 3.1 Datos del Alumno y Grupo asociado
+            // Aquí cargamos los alumnos asociados al tutor/grupo que está generando el informe
+            $alumnos = Alumno::with('grupo')
+                              ->whereHas('grupo', function ($query) use ($grupoId) {
+                                  $query->where('pk_grupo', $grupoId); // Filtrar por el grupo
+                              })
+                              ->orderBy('nombre')
+                              ->get();
+
+            // 3.2 Canalizaciones
+            // Las canalizaciones asociadas a estos alumnos
+            $canalizaciones = Canalizacion::with(['alumno', 'motivo'])
+                                          ->whereIn('fk_alumno', $alumnos->pluck('pk_alumno'))
+                                          ->get();
+
+            // 3.3 Bajas
+            // Las bajas de estos alumnos
+            $bajas = Baja::with(['alumno', 'motivoBaja'])
+                          ->whereIn('fk_alumno', $alumnos->pluck('pk_alumno'))
+                          ->get();
+
+            // 3.4 Actividades Tutoriales (asumiendo que hay una relación o filtro por grupo/tutor)
+            // Aquí, por simplicidad, cargamos todas las actividades. Deberías filtrar.
+            $actividadesTutoriales = Actividad::orderBy('fecha')->get(); 
+
+            // --- 4. LLENAR CELDAS ESPECÍFICAS DE LA PLANTILLA ---
+
+            // --- SECCIÓN DE ENCABEZADO ---
+            $sheet->setCellValue('C4', $cuatrimestre);
+            $sheet->setCellValue('G4', 'T.I.C.'); // Asumiendo división fija
+            $sheet->setCellValue('C5', $carreraNombre);
+            $sheet->setCellValue('G5', $nombreGrupo);
+            $sheet->setCellValue('B6', $tutorNombre);
+
+            // --- SECCIÓN: # DE TUTORÍAS GRUPALES PLANEADAS --- (Líneas 8-15)
+            // Hay que rellenar estos conteos. Esto requiere lógica específica sobre cómo
+            // defines cada situación (riesgo económico, salud, etc.) en tus canalizaciones o alumnos.
+            // A continuación, se muestra un ejemplo.
+
+            // Ejemplo: Contar canalizaciones por motivo para rellenar los N/A
+            // Esto es muy específico a tu DB y lógica de negocio.
+            $countRiesgoEconomico = $canalizaciones->filter(function($c) {
+                return str_contains(strtolower($c->motivo->nombre), 'económic'); // Ejemplo de filtro
+            })->count();
+            $sheet->setCellValue('C9', $countRiesgoEconomico); 
+
+            $countRiesgoSalud = $canalizaciones->filter(function($c) {
+                return str_contains(strtolower($c->motivo->nombre), 'salud'); // Ejemplo de filtro
+            })->count();
+            $sheet->setCellValue('C10', $countRiesgoSalud);
+
+            // Total de estudiantes detectados y derivados con riesgo en el ámbito de salud
+            $countDetectadosSalud = $canalizaciones->filter(function($c) {
+                return str_contains(strtolower($c->motivo->nombre), 'salud'); 
+            })->unique('fk_alumno')->count(); // Contar alumnos únicos con ese motivo
+            $sheet->setCellValue('C11', $countDetectadosSalud);
+
+            // Total de estudiantes detectados y derivados con riesgo en el ámbito económico
+            $countDetectadosEconomico = $canalizaciones->filter(function($c) {
+                return str_contains(strtolower($c->motivo->nombre), 'económic'); 
+            })->unique('fk_alumno')->count();
+            $sheet->setCellValue('C12', $countDetectadosEconomico);
+
+            // ... y así sucesivamente para cada uno de los conteos.
+            // Para "continuarán en el siguiente cuatrimestre" vs "no continuarán", necesitas un campo de estatus futuro del alumno
+            // Para "causaron baja sin canalización", necesitas cruzar datos entre alumnos y bajas.
+            
+            // Dejo los demás como '0' o 'N/A' si no tenemos la lógica exacta
+            $sheet->setCellValue('C8', 'N/A'); // # de tutores detectados y derivados con riesgo económico (este es un conteo de tutores, no alumnos)
+            $sheet->setCellValue('C13', 0); // Estudiantes que continúan derivados
+            $sheet->setCellValue('C14', 0); // Estudiantes que no continúan derivados
+            $sheet->setCellValue('C15', $bajas->filter(fn($b) => empty($canalizaciones->firstWhere('fk_alumno', $b->fk_alumno)))->count()); // Alumnos baja sin canalización
+            $sheet->setCellValue('C16', $bajas->filter(fn($b) => empty($canalizaciones->firstWhere('fk_alumno', $b->fk_alumno)))->count()); // O el que sea
+
+            // --- SECCIÓN: LISTADO DE ALUMNOS DEL GRUPO (FILA 17 en adelante) ---
+            $filaInicioAlumnos = 17;
+            $filaActualAlumnos = $filaInicioAlumnos;
+            foreach ($alumnos as $index => $alumno) {
+                $sheet->setCellValue('A' . $filaActualAlumnos, $index + 1);
+                $sheet->setCellValue('B' . $filaActualAlumnos, $alumno->nombre_completo);
+                
+                // Estos campos (C,D,E,F,G,H,I,J,K) son situaciones (académica, psicológica, etc.).
+                // Necesitas tener esta información asociada al alumno (ej. en la tabla 'formato_canalizacion'
+                // o directamente en el modelo Alumno como un campo de riesgo).
+                // Por ahora, pondremos "N/A" o "X" de ejemplo.
+                // Ejemplo: Si el alumno tiene alguna canalización de tipo 'Académica'
+                $tieneRiesgoAcademico = $canalizaciones->where('fk_alumno', $alumno->pk_alumno)
+                                                        ->filter(function($c) {
+                                                            return str_contains(strtolower($c->motivo->nombre), 'académic');
+                                                        })->isNotEmpty();
+                $sheet->setCellValue('C' . $filaActualAlumnos, $tieneRiesgoAcademico ? 'X' : 'N/A');
+                // Repite esto para otras situaciones (Psicologica, Economica, etc.)
+                $sheet->setCellValue('D' . $filaActualAlumnos, 'N/A'); 
+                $sheet->setCellValue('E' . $filaActualAlumnos, 'N/A'); 
+                $sheet->setCellValue('F' . $filaActualAlumnos, 'N/A'); 
+                $sheet->setCellValue('G' . $filaActualAlumnos, 'N/A'); 
+                $sheet->setCellValue('H' . $filaActualAlumnos, 'N/A'); 
+                $sheet->setCellValue('I' . $filaActualAlumnos, 'N/A'); 
+                $sheet->setCellValue('J' . $filaActualAlumnos, 'N/A'); 
+                $sheet->setCellValue('K' . $filaActualAlumnos, 'N/A');
+
+                $filaActualAlumnos++;
+            }
+
+            // Despues de listar los alumnos, la siguiente sección "REGISTRO DE CANALIZACIONES"
+            // comienza en la FILA 39. Debemos asegurarnos de que la lista de alumnos no la sobrescriba.
+            // Si la lista de alumnos es muy larga, esto causará problemas.
+            // Considera hacer la plantilla dinámica o limitar el número de alumnos.
+            $filaInicioCanalizaciones = 39;
+            $filaActualCanalizaciones = $filaInicioCanalizaciones; 
+            
+            // --- SECCIÓN: REGISTRO DE CANALIZACIONES (FILA 39 en adelante) ---
+            foreach ($canalizaciones as $index => $canalizacion) {
+                // Aquí usamos 'alumno' y 'motivo' de las relaciones cargadas
+                $sheet->setCellValue('A' . $filaActualCanalizaciones, $index + 1);
+                $sheet->setCellValue('B' . $filaActualCanalizaciones, $canalizacion->alumno->nombre_completo ?? 'N/A');
+                $sheet->setCellValue('C' . $filaActualCanalizaciones, $canalizacion->motivo->nombre ?? 'N/A');
+                $sheet->setCellValue('D' . $filaActualCanalizaciones, $canalizacion->estatus); // Estatus o Área (según tu columna)
+                $sheet->setCellValue('E' . $filaActualCanalizaciones, Carbon::parse($canalizacion->fecha_inicio)->format('d-m-Y'));
+                $sheet->setCellValue('F' . $filaActualCanalizaciones, $canalizacion->fecha_final ? Carbon::parse($canalizacion->fecha_final)->format('d-m-Y') : 'N/A');
+                $filaActualCanalizaciones++;
+            }
+            
+            // --- SECCIÓN: BAJAS (FILA 51 en adelante) ---
+            $filaInicioBajas = 51;
+            $filaActualBajas = $filaInicioBajas;
+            foreach ($bajas as $index => $baja) {
+                $sheet->setCellValue('A' . $filaActualBajas, $index + 1);
+                $sheet->setCellValue('B' . $filaActualBajas, $baja->alumno->nombre_completo ?? 'N/A');
+                $sheet->setCellValue('C' . $filaActualBajas, $baja->motivoBaja->nombre ?? 'N/A');
+                $sheet->setCellValue('E' . $filaActualBajas, Carbon::parse($baja->fecha)->format('d-m-Y'));
+                $filaActualBajas++;
+            }
+
+            // --- SECCIÓN: ACCIONES TUTORIALES GRUPALES / INDIVIDUALES (FILA 58 en adelante) ---
+            $filaInicioActividades = 58;
+            $filaActualActividades = $filaInicioActividades;
+            foreach ($actividadesTutoriales as $index => $actividad) {
+                $sheet->setCellValue('A' . $filaActualActividades, $index + 1);
+                $sheet->setCellValue('B' . $filaActualActividades, $actividad->nombre); // Nombre de la actividad
+                $sheet->setCellValue('D' . $filaActualActividades, Carbon::parse($actividad->fecha)->format('d-m-Y')); // Fecha
+                $sheet->setCellValue('E' . $filaActualActividades, $actividad->asistencia); // Asistencia
+                // Otros campos (F, G, H, I, J, K) deben ser mapeados si existen en tu modelo Actividad
+                $filaActualActividades++;
+            }
+            
+            // --- SECCIÓN DE TOTALES Y FIRMAS (después de las acciones) ---
+            // Estos valores se pondrán justo debajo de la última actividad listada.
+            // Necesitas ajustar el +X según el número de filas que se deben dejar.
+            $filaFinalReporte = $filaActualActividades + 3; // Ajusta este número según tu plantilla
+            
+            $sheet->setCellValue('B' . $filaFinalReporte, $alumnos->count()); // TOTAL DE ALUMNOS ATENDIDOS
+            $sheet->setCellValue('B' . ($filaFinalReporte + 1), $canalizaciones->count()); // ALUMNOS CANALIZADOS
+            $sheet->setCellValue('B' . ($filaFinalReporte + 2), 0); // ALUMNOS EN RIESGO (Necesitas definir la lógica para esto)
+            $sheet->setCellValue('B' . ($filaFinalReporte + 3), $bajas->count()); // ALUMNOS DADOS DE BAJA
+
+            // --- 5. CREAR EL ARCHIVO Y ENVIARLO AL NAVEGADOR ---
+            $writer = new Xlsx($spreadsheet);
+
+            // Asegura que el archivo se descargue
+            $response = new StreamedResponse(function() use ($writer) {
+                $writer->save('php://output');
+            });
+
+            $fileName = 'Informe_Final_Tutoria_' . Carbon::now()->format('Ymd_His') . '.xlsx';
+            $response->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            $response->headers->set('Content-Disposition', 'attachment;filename="' . $fileName . '"');
+            $response->headers->set('Cache-Control', 'max-age=0');
+            $response->headers->set('Pragma', 'public');
+
+            return $response;
+
+        } catch (\Exception $e) {
+            // Manejo de errores
+            return redirect()->back()->with('error', 'Error al generar el reporte: ' . $e->getMessage());
+        }
+    }
+
+    public function exportarFormatoPDF(Canalizacion $canalizacion)
+    {
+        // 1. Cargamos el alumno y grupo (ya lo hace el binding)
+        $canalizacion->load('alumno.grupo', 'motivo');
+
+        // 2. Buscamos el "formato" que corresponde al MISMO ALUMNO
+        // Usamos la misma lógica que en el método show()
+        $formato = FormatoCanalizacion::where('fk_alumno', $canalizacion->fk_alumno)
+                                      ->orderBy('fecha_canalizacion', 'desc')
+                                      ->first();
+
+        // 3. Pasamos los datos a la vista PDF que creamos
+        $pdf = Pdf::loadView('reportes.formato-canalizacion-pdf', [
+            'canalizacion' => $canalizacion,
+            'formato' => $formato
+        ]);
+
+        // 4. Creamos un nombre de archivo dinámico
+        $fileName = 'Formato_Canalizacion_' . $canalizacion->alumno->pk_alumno . '.pdf';
+
+        // 5. Devolvemos el PDF para descargar
+        return $pdf->download($fileName);
     }
 }

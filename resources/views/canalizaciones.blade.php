@@ -11,7 +11,7 @@
                     <p class="text-sm text-gray-500 dark:text-neutral-400 mt-1">Información de canalizaciones y bajas</p>
                 </div>
                 <div class="flex items-center space-x-3 mt-4 md:mt-0">
-                    <button
+                    <a href="{{ route('canalizaciones.reporte.final') }}"
                         class="flex items-center space-x-2 px-4 py-2 text-sm font-medium text-gray-700 dark:text-neutral-200 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-700 rounded-lg shadow-sm hover:bg-gray-50 dark:hover:bg-neutral-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 transition-colors">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor" stroke-width="2">
@@ -19,7 +19,7 @@
                                 d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                         </svg>
                         <span>Generar Informe Final</span>
-                    </button>
+                    </a>
                     <button @click.prevent="$dispatch('open-modal')"
                         class="flex items-center space-x-2 px-4 py-2 text-sm font-medium text-white bg-[#2B8A7F] border border-transparent rounded-lg shadow-sm hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
@@ -137,7 +137,7 @@
                                                                 clip-rule="evenodd" />
                                                         </svg>
                                                     </a>
-                                                    <button
+                                                    <a href="{{ route('canalizaciones.formato.pdf', $canalizacion) }}"
                                                         class="text-gray-500 dark:text-neutral-400 hover:text-green-600 dark:hover:text-green-400 transition-colors">
                                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
                                                             viewBox="0 0 20 20" fill="currentColor">
@@ -145,7 +145,7 @@
                                                                 d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
                                                                 clip-rule="evenodd" />
                                                         </svg>
-                                                    </button>
+                                                    </a>
                                                 </div>
                                             </td>
                                         </tr>
@@ -171,7 +171,8 @@
                         class="bg-white dark:bg-neutral-900 p-6 rounded-lg shadow-sm border border-gray-200 dark:border-neutral-700">
                         <div>
                             <h3 class="font-bold text-lg text-gray-800 dark:text-neutral-100">Historial de Bajas</h3>
-                            <p class="text-sm text-gray-500 dark:text-neutral-400">Registro completo de alumnos dados de
+                            <p class="text-sm text-gray-500 dark:text-neutral-400">Registro completo de alumnos dados
+                                de
                                 baja</p>
                         </div>
                         <div class="overflow-x-auto mt-4">

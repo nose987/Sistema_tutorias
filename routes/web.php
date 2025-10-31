@@ -49,7 +49,11 @@ Route::get('/alumnos/{alumno}/historial', [App\Http\Controllers\CanalizacionCont
 Route::post('/alumnos/{alumno}/baja', [App\Http\Controllers\CanalizacionController::class, 'darDeBaja'])
     ->name('alumnos.baja');
 
+Route::get('/reportes/canalizaciones-final', [CanalizacionController::class, 'exportarInformeFinalPlantilla'])
+    ->name('canalizaciones.reporte.final');
 
+Route::get('/canalizaciones/{canalizacion}/pdf', [CanalizacionController::class, 'exportarFormatoPDF'])
+    ->name('canalizaciones.formato.pdf');
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
