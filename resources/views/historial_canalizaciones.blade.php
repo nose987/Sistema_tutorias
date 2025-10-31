@@ -1,5 +1,6 @@
 <x-layouts.app :title="__('Historial de canalizaciones')">
-    <div class="bg-slate-50 dark:bg-neutral-900">
+    {{-- CAMBIO: Fondo de página más claro --}}
+    <div class="bg-slate-50 dark:bg-neutral-800">
 
         <div class="max-w-7xl mx-auto p-6 md:p-8">
 
@@ -22,23 +23,27 @@
 
             {{-- STATS DINÁMICAS --}}
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                {{-- CAMBIO: Tarjetas más oscuras --}}
                 <div
-                    class="bg-white dark:bg-neutral-800 p-5 rounded-lg shadow-sm border border-gray-200 dark:border-neutral-700">
+                    class="bg-white dark:bg-neutral-900 p-5 rounded-lg shadow-sm border border-gray-200 dark:border-neutral-700">
                     <p class="text-sm font-medium text-gray-500 dark:text-neutral-400">Total de Canalizaciones</p>
                     <p class="text-3xl font-bold text-gray-900 dark:text-neutral-100 mt-1">{{ $totalCanalizaciones }}</p>
                 </div>
+                {{-- CAMBIO: Tarjetas más oscuras --}}
                 <div
-                    class="bg-white dark:bg-neutral-800 p-5 rounded-lg shadow-sm border border-gray-200 dark:border-neutral-700">
+                    class="bg-white dark:bg-neutral-900 p-5 rounded-lg shadow-sm border border-gray-200 dark:border-neutral-700">
                     <p class="text-sm font-medium text-gray-500 dark:text-neutral-400">En Proceso</p>
                     <p class="text-3xl font-bold text-green-600 dark:text-green-500 mt-1">{{ $totalActivas }}</p>
                 </div>
+                {{-- CAMBIO: Tarjetas más oscuras --}}
                 <div
-                    class="bg-white dark:bg-neutral-800 p-5 rounded-lg shadow-sm border border-gray-200 dark:border-neutral-700">
-                    <p class="text-sm font-medium text-gray-500 dark:text-neutral-400">Cerradas</p> {{-- DB dice "Cerrada" --}}
+                    class="bg-white dark:bg-neutral-900 p-5 rounded-lg shadow-sm border border-gray-200 dark:border-neutral-700">
+                    <p class="text-sm font-medium text-gray-500 dark:text-neutral-400">Cerradas</p>
                     <p class="text-3xl font-bold text-gray-700 dark:text-neutral-300 mt-1">{{ $totalCerradas }}</p>
                 </div>
+                {{-- CAMBIO: Tarjetas más oscuras --}}
                 <div
-                    class="bg-white dark:bg-neutral-800 p-5 rounded-lg shadow-sm border border-gray-200 dark:border-neutral-700">
+                    class="bg-white dark:bg-neutral-900 p-5 rounded-lg shadow-sm border border-gray-200 dark:border-neutral-700">
                     <p class="text-sm font-medium text-gray-500 dark:text-neutral-400">Motivo Más Frecuente</p>
                     <p class="text-lg font-semibold text-gray-900 dark:text-neutral-100 mt-2">{{ $motivoComun }}</p>
                 </div>
@@ -53,16 +58,14 @@
                 <div class="mt-6 space-y-6">
                     @forelse ($canalizaciones as $canalizacion)
                         @php
-                            // El 'formato' es el MÁS RECIENTE del alumno, 
-                            // ya que la DB no vincula 1-a-1 la canalización con el formato
                             $formato = $canalizacion->formato; 
                         @endphp
+                        {{-- CAMBIO: Tarjeta más oscura --}}
                         <div
-                            class="bg-white dark:bg-neutral-800 p-6 rounded-lg shadow-sm border border-gray-200 dark:border-neutral-700">
+                            class="bg-white dark:bg-neutral-900 p-6 rounded-lg shadow-sm border border-gray-200 dark:border-neutral-700">
                             <div class="flex justify-between items-center mb-4">
                                 <div class="flex items-center space-x-3">
                                     <h3 class="text-lg font-bold text-gray-900 dark:text-neutral-100">
-                                        {{-- Ver detalle de esta canalización específica --}}
                                         <a href="{{ route('canalizaciones.show', $canalizacion) }}" class="hover:text-teal-600">
                                             Canalización #{{ $canalizacion->pk_canalizacion }}
                                         </a>
@@ -152,8 +155,9 @@
                         </div>
                     @empty
                         {{-- Mensaje si no hay canalizaciones --}}
+                        {{-- CAMBIO: Tarjeta más oscura --}}
                         <div
-                            class="bg-white dark:bg-neutral-800 p-6 rounded-lg shadow-sm border border-gray-200 dark:border-neutral-700">
+                            class="bg-white dark:bg-neutral-900 p-6 rounded-lg shadow-sm border border-gray-200 dark:border-neutral-700">
                             <p class="text-center text-gray-500 dark:text-neutral-400">Este alumno no tiene
                                 canalizaciones en su historial.</p>
                         </div>
