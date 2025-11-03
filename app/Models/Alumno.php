@@ -81,9 +81,16 @@ class Alumno extends Model
     {
         return "{$this->nombre} {$this->apellido_paterno} {$this->apellido_materno}";
     }
-}
 
-public function observaciones()
+    public function observaciones()
     {
     return $this->hasMany(\App\Models\Observacion::class, 'fk_alumno', 'pk_alumno');
     }
+
+    public function opcionesEstadia()
+    {
+        return $this->hasMany(OpcionEstadia::class, 'fk_alumno', 'pk_alumno');
+    }
+}
+
+

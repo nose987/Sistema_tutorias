@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 use Illuminate\Support\Str; // <-- Asegúrate de importar esta
 use App\Exports\GrupoAlumnosExport; // La clase que creamos
 use Maatwebsite\Excel\Facades\Excel; // El facade de la librería
+use Illuminate\Support\Facades\DB;
 
 class GrupoController extends Controller
 {
@@ -32,6 +33,26 @@ class GrupoController extends Controller
      * MUESTRA EL DETALLE (Método actualizado)
      * Usamos Route Model Binding (Grupo $grupo)
      */
+
+    public function create()
+    {
+    return view('crear_grupo'); // tu blade de crear
+    }
+    
+    public function store(Request $request)
+    {
+    $data = $request->validate([
+        'nombre_grupo' => 'required|string|max:255',
+        'cuatrimestre' => 'nullable|string|max:255',
+        'estatus'      => 'required|in:Activo,Inactivo',
+    ]);
+
+    $grupo = Grupo::create($data);
+
+    return redirect()
+        ->route('detalle_grupo', $grupo->pk_grupo)
+        ->with('status', 'Grupo creado correctamente.');
+    }
     public function show(Grupo $grupo)
     {
         // Laravel ya hizo el findOrFail() por ti
@@ -162,5 +183,48 @@ class GrupoController extends Controller
         $response->headers->set('Content-Disposition', "attachment; filename=\"$filename\"");
 
         return $response;
+    }
+
+        public function duplicar(Request $request, Grupo $grupo)
+    {
+        $data = $request->validate([
+            'nombre_grupo'          => 'nullable|string|max:255',
+            'cuatrimestre'          => 'nullable|string|max:255',
+            'estatus'               => 'nullable|in:Activo,Inactivo',
+            'incluir_observaciones' => 'nullable|boolean',
+        ]);
+
+        // Cargar relaciones para evitar N+1
+        $grupo->load(['alumnos.observaciones']);
+
+        return DB::transaction(function () use ($grupo, $data) {
+            // 1) Copiar grupo
+            $nuevo = $grupo->replicate();
+            $nuevo->nombre_grupo = $data['nombre_grupo'] ?? ($grupo->nombre_grupo.' (Copia)');
+            $nuevo->cuatrimestre = $data['cuatrimestre'] ?? $grupo->cuatrimestre;
+            $nuevo->estatus      = $data['estatus'] ?? $grupo->estatus;
+            $nuevo->save();
+
+            $copiarObs = (bool)($data['incluir_observaciones'] ?? true);
+
+            // 2) Copiar alumnos (+ observaciones opcional)
+            foreach ($grupo->alumnos as $alumno) {
+                $nuevoAlumno = $alumno->replicate();
+                $nuevoAlumno->fk_grupo = $nuevo->pk_grupo;
+                $nuevoAlumno->save();
+
+                if ($copiarObs && method_exists($alumno, 'observaciones')) {
+                    foreach ($alumno->observaciones as $obs) {
+                        $nuevaObs = $obs->replicate();
+                        $nuevaObs->fk_alumno = $nuevoAlumno->pk_alumno;
+                        $nuevaObs->save();
+                    }
+                }
+            }
+
+            return redirect()
+                ->route('detalle_grupo', $nuevo->pk_grupo)
+                ->with('status', 'Grupo duplicado correctamente.');
+        });
     }
 }

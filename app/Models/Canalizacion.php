@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Models\Alumno;
+use App\Models\MotivoCanalizacion;
 
 class Canalizacion extends Model
 {
@@ -57,5 +59,16 @@ class Canalizacion extends Model
     public function motivo(): BelongsTo
     {
         return $this->belongsTo(MotivoCanalizacion::class, 'fk_motivo_canalizacion', 'pk_motivo_canalizacion');
+    }
+
+
+    /**
+     * Obtiene el formato MÁS RECIENTE asociado al ALUMNO de esta canalización.
+     * La DB no linkea formato con canalización, sino formato con alumno.
+     */
+    public function formato()
+    {
+        return $this->hasOne(FormatoCanalizacion::class, 'fk_alumno', 'fk_alumno')
+                    ->orderBy('fecha_canalizacion', 'desc');
     }
 }

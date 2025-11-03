@@ -30,6 +30,10 @@
             </flux:navlist>
 
             <flux:navlist variant="outline">
+                    <flux:navlist.item icon="rectangle-stack" :href="route('estadias')" :current="request()->routeIs('estadias')" wire:navigate>{{ __('Estadias') }}</flux:navlist.item>
+            </flux:navlist>
+
+            <flux:navlist variant="outline">
                     <flux:navlist.item icon="rectangle-stack" :href="route('grupo')" :current="request()->routeIs('grupo')" wire:navigate>{{ __('Grupo') }}</flux:navlist.item>
             </flux:navlist>
 

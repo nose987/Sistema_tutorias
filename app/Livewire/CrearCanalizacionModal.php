@@ -142,16 +142,19 @@ class CrearCanalizacionModal extends Component
         $this->validate();
 
         // Si la validación pasa, crea el registro
-        Canalizacion::create([
+        $canalizacion = Canalizacion::create([
             'fk_alumno' => $this->selectedAlumnoId,
             'fk_motivo_canalizacion' => $this->selectedMotivoId,
             'fecha_inicio' => Carbon::now(), // Pone la fecha y hora actual
             'estatus' => 'Activa' //
         ]);
 
-        // Recarga la página actual y envía un mensaje de éxito
-        return redirect(request()->header('Referer'))
-            ->with('status', '¡Canalización registrada con éxito!');
+        // Cierra el modal
+        $this->closeModal();
+
+        // Redirige al formato de la canalización recién creada
+        return redirect()->route('canalizaciones.formato.show', $canalizacion)
+            ->with('status', '¡Canalización registrada con éxito! Ahora puedes llenar el formato.');
     }
 
     // ... (tu método render() existente)
