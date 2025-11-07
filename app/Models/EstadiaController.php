@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Alumno;
 use App\Models\Empresa;
-use App\Models\OpcionEstadia; // <-- ¡Importar el nuevo modelo!
+use App\Models\OpcionEstadia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log; // Para depuración
 
@@ -35,10 +35,13 @@ class EstadiaController extends Controller
      */
     public function updateOpciones(Request $request, Alumno $alumno)
     {
+        // ========================================================
+        // CORRECCIÓN: 'empresa' -> 'empresas'
+        // ========================================================
         $validated = $request->validate([
-            'opcion_1_id' => 'nullable|integer|exists:empresa,pk_empresa',
-            'opcion_2_id' => 'nullable|integer|exists:empresa,pk_empresa',
-            'opcion_3_id' => 'nullable|integer|exists:empresa,pk_empresa',
+            'opcion_1_id' => 'nullable|integer|exists:empresas,pk_empresa',
+            'opcion_2_id' => 'nullable|integer|exists:empresas,pk_empresa',
+            'opcion_3_id' => 'nullable|integer|exists:empresas,pk_empresa',
         ]);
 
         try {
@@ -70,7 +73,15 @@ class EstadiaController extends Controller
                 }
             }
             
-            return response()->json(['success' => true, 'message' => 'Opciones de estadía actualizadas.']);
+            // Si el front-end está actualizando dinámicamente,
+            // es bueno devolver los datos actualizados.
+            $opcionesActualizadas = $this->getOpcionesParaAlumno($alumno);
+
+            return response()->json([
+                'success' => true, 
+                'message' => 'Opciones de estadía actualizadas.',
+                'opciones_actualizadas' => $opcionesActualizadas // Enviamos los datos al front
+            ]);
 
         } catch (\Exception $e) {
             Log::error('Error al actualizar opciones: ' . $e->getMessage());
@@ -99,5 +110,41 @@ class EstadiaController extends Controller
             Log::error('Error al actualizar estatus: ' . $e->getMessage());
             return response()->json(['success' => false, 'message' => 'Error del servidor al actualizar estatus.'], 500);
         }
+    }
+
+    /**
+     * (Función Helper Opcional)
+     * Obtiene las opciones formateadas para la respuesta JSON.
+     */
+    private function getOpcionesParaAlumno(Alumno $alumno)
+    {
+        // Recargamos la relación con la empresa
+        $opciones = OpcionEstadia::with('empresa')
+                        ->where('fk_alumno', $alumno->pk_alumno)
+                        ->get();
+
+        $opcionesFormateadas = [];
+
+        for ($i = 1; $i <= 3; $i++) {
+            $opcion = $opciones->firstWhere('opcion_numero', $i);
+            
+            if ($opcion) {
+                $opcionesFormateadas[] = [
+                    'opcion_numero' => $i,
+                    'pk_opcion_estadia' => $opcion->pk_opcion_estadia,
+                    'estatus' => $opcion->estatus,
+                    'empresa_nombre' => $opcion->empresa->nombre ?? 'N/A' // Aseguramos que la empresa esté cargada
+                ];
+            } else {
+                $opcionesFormateadas[] = [
+                    'opcion_numero' => $i,
+                    'pk_opcion_estadia' => null,
+                    'estatus' => null,
+                    'empresa_nombre' => null
+                ];
+            }
+        }
+
+        return $opcionesFormateadas;
     }
 }

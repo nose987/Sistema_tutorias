@@ -8,7 +8,7 @@ use App\Models\Empresa;
 use App\Models\Alumno;
 use App\Http\Controllers\EmpresaController;
 use App\Models\OpcionEstadia;
-use App\Http\Controllers\ReporteEstadiaController; // <-- ¡AÑADIDO! Importa el controlador del reporte
+use App\Http\Controllers\ReporteEstadiaController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -26,12 +26,10 @@ Route::view('canalizaciones', 'canalizaciones')
     ->middleware(['auth', 'verified'])
     ->name('canalizaciones');
 
-// ===================================================
-// RUTA DE ESTADIAS (OPTIMIZADA)
-// ===================================================
 Route::get('estadias', function () {
-    $alumnos = Alumno::with('opcionesEstadia.empresa')->get();
-    $empresas = Empresa::all();
+    // Optimizado para cargar solo las relaciones necesarias
+    $alumnos = Alumno::with('opcionesEstadia.empresa')->orderBy('apellido_paterno')->get();
+    $empresas = Empresa::where('estatus', 'Activa')->orderBy('nombre')->get();
 
     return view('layouts.estadias', [
         'alumnos' => $alumnos,
@@ -39,9 +37,6 @@ Route::get('estadias', function () {
     ]);
 })->middleware(['auth', 'verified'])->name('estadias');
 
-// ===================================================
-// RUTA PARA ACTUALIZAR OPCIONES DE ALUMNO (CORREGIDA)
-// ===================================================
 Route::put('/alumnos/{alumno}/opciones', function(Request $request, Alumno $alumno) {
 
     $validated = $request->validate([
@@ -49,6 +44,11 @@ Route::put('/alumnos/{alumno}/opciones', function(Request $request, Alumno $alum
         'opcion_2_id' => 'nullable|integer|exists:empresa,pk_empresa',
         'opcion_3_id' => 'nullable|integer|exists:empresa,pk_empresa',
     ]);
+
+    // Limpiar valores vacíos para que sean NULL
+    $validated['opcion_1_id'] = $validated['opcion_1_id'] ?: null;
+    $validated['opcion_2_id'] = $validated['opcion_2_id'] ?: null;
+    $validated['opcion_3_id'] = $validated['opcion_3_id'] ?: null;
 
     $alumno->opcionesEstadia()->updateOrCreate(
         ['opcion_numero' => 1],
@@ -71,10 +71,6 @@ Route::put('/alumnos/{alumno}/opciones', function(Request $request, Alumno $alum
     ]);
 })->middleware(['auth', 'verified']);
 
-
-// ==========================================================
-// RUTA PARA ACTUALIZAR ESTATUS DE UNA OPCIÓN (AJAX)
-// ==========================================================
 Route::patch('/opciones-estadia/{opcion}/status', function(Request $request, OpcionEstadia $opcion) {
 
     $validated = $request->validate([
@@ -90,9 +86,6 @@ Route::patch('/opciones-estadia/{opcion}/status', function(Request $request, Opc
 })->middleware(['auth', 'verified'])->name('opciones-estadia.updateStatus');
 
 
-// ===================================================
-// RUTAS DE EMPRESAS
-// ===================================================
 Route::view('empresas/crear', 'layouts.nueva_empresa')
     ->middleware(['auth', 'verified'])
     ->name('empresas.create');
@@ -120,17 +113,70 @@ Route::post('empresas', function (Request $request) {
     return redirect()->route('estadias')->with('success', '¡Empresa registrada con éxito!');
 })->middleware(['auth', 'verified'])->name('empresas.store');
 
-// ===================================================
-// RUTAS DEL REPORTE
-// ===================================================
-// Route::view('estadias/reporte', 'layouts.reporte-estadias') // <-- ¡ELIMINADA! Esta línea causaba el error
-//    ->middleware(['auth', 'verified'])
-//    ->name('estadias.reporte');
-
-// ¡CORREGIDO! Ahora llama al controlador que calcula $stats
+// RUTA 1: Dashboard de Estadísticas (La que ya tenías)
 Route::get('estadias/reporte', [ReporteEstadiaController::class, 'index'])
     ->middleware(['auth', 'verified'])
-    ->name('estadias.reporte');
+    ->name('estadias.reporte'); // <--- Esta es para las estadísticas
+
+// RUTA 2: Reporte Final de Alumnos (La nueva página)
+Route::get('/estadias/reporte-final', [ReporteEstadiaController::class, 'finales'])
+    ->middleware(['auth', 'verified']) // <-- ¡No olvides el middleware!
+    ->name('estadias.reporte.final'); // <--- ¡Le damos un nombre NUEVO y único!
+
+Route::patch('/alumnos/{alumno}/confirmar-final', function(Alumno $alumno) {
+    
+    // 1. Encontrar la primera opción aceptada (por prioridad)
+    $opcionAceptada = $alumno->opcionesEstadia()
+                            ->where('estatus', 'Aceptado')
+                            ->orderBy('opcion_numero', 'asc')
+                            ->first();
+
+    if (!$opcionAceptada) {
+        return response()->json(['success' => false, 'message' => 'Este alumno no tiene ninguna opción "Aceptada".'], 422);
+    }
+
+    // 2. Rechazar todas las OTRAS opciones que no sean la aceptada
+    $alumno->opcionesEstadia()
+           ->where('pk_opcion_estadia', '!=', $opcionAceptada->pk_opcion_estadia)
+           ->whereIn('estatus', ['Pendiente', 'Contactado', 'No Contactado'])
+           ->update(['estatus' => 'Rechazado']);
+
+    return response()->json([
+        'success' => true,
+        'message' => '¡Estadía confirmada! Las otras opciones se marcaron como "Rechazado".'
+    ]);
+
+})->middleware(['auth', 'verified'])->name('alumnos.confirmarFinal');
+
+
+// --- =================================== ---
+// ---     RUTA NUEVA PARA REVERTIR        ---
+// --- =================================== ---
+Route::patch('/alumnos/{alumno}/revertir-final', function(Alumno $alumno) {
+    
+    // 1. Encontrar la opción Aceptada (para NO tocarla)
+    $opcionAceptada = $alumno->opcionesEstadia()
+                            ->where('estatus', 'Aceptado')
+                            ->first();
+    
+    if (!$opcionAceptada) {
+         return response()->json(['success' => false, 'message' => 'Error: No se encontró la opción aceptada para revertir.'], 422);
+    }
+
+    // 2. Buscar todas las opciones Rechazadas (que fueron finalizadas) 
+    //    y cambiarlas de nuevo a Pendiente
+    $alumno->opcionesEstadia()
+        ->where('pk_opcion_estadia', '!=', $opcionAceptada->pk_opcion_estadia)
+        ->where('estatus', 'Rechazado')
+        ->update(['estatus' => 'Pendiente']); // <-- La acción clave de REVERTIR
+
+    return response()->json([
+        'success' => true,
+        'message' => '¡Reversión exitosa! El alumno está de vuelta en gestión.'
+    ]);
+
+})->middleware(['auth', 'verified'])->name('alumnos.revertirFinal');
+// --- FIN DE LA NUEVA RUTA ---
 
 
 Route::get('estadias/reporte/pdf', function() {
@@ -139,9 +185,6 @@ Route::get('estadias/reporte/pdf', function() {
 ->middleware(['auth', 'verified'])
 ->name('estadias.reporte.pdf');
 
-// ===================================================
-// RUTAS DE CONFIGURACIÓN
-// ===================================================
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
 
@@ -162,10 +205,5 @@ Route::middleware(['auth'])->group(function () {
 
 require __DIR__.'/auth.php';
 
-// Ruta para mostrar el formulario de edición (si tienes una página separada)
-// Route::get('/empresas/{empresa}/edit', [EmpresaController::class, 'edit'])->name('empresas.edit'); // Comentada si no tienes este método
-// Ruta para ACTUALIZAR una empresa (recibe PUT/PATCH)
 Route::put('/empresas/{empresa}', [EmpresaController::class, 'update'])->name('empresas.update');
-// Ruta para ELIMINAR una empresa (recibe DELETE)
 Route::delete('/empresas/{empresa}', [EmpresaController::class, 'destroy'])->name('empresas.destroy');
-

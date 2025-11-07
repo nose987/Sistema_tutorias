@@ -103,60 +103,15 @@ new #[Layout('components.layouts.auth')] class extends Component {
     }
 }; ?>
 
-<div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: #f9fafb; overflow: auto; z-index: 9999;">
+<div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: #ffffff; overflow: auto; z-index: 9999;">
     <div style="min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 1rem;">
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; width: 100%; max-width: 1200px;">
             
-            <!-- Left side - Illustration and Footer -->
+            <!-- Left side - Image and Footer -->
             <div style="display: flex; flex-direction: column; justify-content: space-between; padding: 2rem 0;">
                 <div style="flex: 1; display: flex; align-items: center; justify-content: center;">
                     <div style="width: 100%; max-width: 450px;">
-                        <svg viewBox="0 0 500 400" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
-                            <ellipse cx="120" cy="380" rx="40" ry="15" fill="#E2E8F0"/>
-                            <path d="M120 350 Q100 370 80 380 Q100 375 120 380" fill="#CBD5E1"/>
-                            <path d="M120 350 Q140 370 160 380 Q140 375 120 380" fill="#94A3B8"/>
-                            <rect x="200" y="120" width="250" height="200" rx="10" fill="#E2E8F0"/>
-                            <rect x="215" y="140" width="100" height="15" rx="5" fill="#CBD5E1"/>
-                            <circle cx="330" cy="147" r="7" fill="#CBD5E1"/>
-                            <circle cx="350" cy="147" r="7" fill="#CBD5E1"/>
-                            <rect x="215" y="170" width="220" height="30" rx="5" fill="white"/>
-                            <circle cx="230" cy="185" r="8" fill="#14B8A6"/>
-                            <rect x="250" y="178" width="100" height="5" rx="2" fill="#CBD5E1"/>
-                            <rect x="250" y="188" width="60" height="4" rx="2" fill="#E2E8F0"/>
-                            <rect x="215" y="210" width="220" height="30" rx="5" fill="white"/>
-                            <circle cx="230" cy="225" r="8" fill="#14B8A6"/>
-                            <rect x="250" y="218" width="100" height="5" rx="2" fill="#CBD5E1"/>
-                            <rect x="250" y="228" width="60" height="4" rx="2" fill="#E2E8F0"/>
-                            <rect x="215" y="250" width="220" height="30" rx="5" fill="white"/>
-                            <circle cx="230" cy="265" r="8" fill="#CBD5E1"/>
-                            <rect x="250" y="258" width="100" height="5" rx="2" fill="#CBD5E1"/>
-                            <rect x="250" y="268" width="60" height="4" rx="2" fill="#E2E8F0"/>
-                            <rect x="330" y="250" width="90" height="60" rx="5" fill="#CBD5E1"/>
-                            <path d="M340 285 L350 275 L365 290 L370 285 L410 300 L410 305 L340 305 Z" fill="#94A3B8"/>
-                            <circle cx="355" cy="265" r="5" fill="#FCD34D"/>
-                            <ellipse cx="480" cy="100" rx="25" ry="35" fill="#A7F3D0" opacity="0.6" transform="rotate(-30 480 100)"/>
-                            <ellipse cx="460" cy="140" rx="20" ry="30" fill="#6EE7B7" opacity="0.5" transform="rotate(20 460 140)"/>
-                            <ellipse cx="470" cy="200" rx="22" ry="32" fill="#A7F3D0" opacity="0.5" transform="rotate(-15 470 200)"/>
-                            <ellipse cx="180" cy="90" rx="20" ry="28" fill="#A7F3D0" opacity="0.6" transform="rotate(25 180 90)"/>
-                            <ellipse cx="160" cy="120" rx="18" ry="26" fill="#6EE7B7" opacity="0.5" transform="rotate(-20 160 120)"/>
-                            <circle cx="440" cy="160" r="8" fill="#E2E8F0"/>
-                            <circle cx="470" cy="250" r="6" fill="#CBD5E1"/>
-                            <circle cx="190" cy="130" r="7" fill="#E2E8F0"/>
-                            <rect x="480" y="140" width="12" height="30" rx="2" fill="#CBD5E1"/>
-                            <rect x="496" y="125" width="12" height="45" rx="2" fill="#CBD5E1"/>
-                            <rect x="512" y="135" width="12" height="35" rx="2" fill="#94A3B8"/>
-                            <circle cx="280" cy="260" r="18" fill="#8B5CF6"/>
-                            <path d="M270 255 Q275 250 280 255 Q285 250 290 255" fill="#4C1D95"/>
-                            <path d="M280 278 L265 320 L260 360 L270 360 L275 330 L285 330 L290 360 L300 360 L295 320 Z" fill="#86EFAC"/>
-                            <path d="M265 290 L240 300 L235 310 L245 312 L268 302" fill="#86EFAC"/>
-                            <path d="M295 290 L315 305 L312 315 L302 312 L290 300" fill="#86EFAC"/>
-                            <rect x="305" y="300" width="25" height="35" rx="2" fill="#1E293B"/>
-                            <rect x="308" y="303" width="19" height="26" rx="1" fill="#14B8A6" opacity="0.5"/>
-                            <rect x="268" y="360" width="10" height="25" fill="#4338CA"/>
-                            <rect x="282" y="360" width="10" height="25" fill="#4338CA"/>
-                            <ellipse cx="273" cy="387" rx="8" ry="4" fill="#78350F"/>
-                            <ellipse cx="287" cy="387" rx="8" ry="4" fill="#78350F"/>
-                        </svg>
+                        <img src="{{ asset('images/Presentation_1.jpg') }}" alt="Presentation" style="width: 100%; height: auto; object-fit: contain;">
                     </div>
                 </div>
 
@@ -268,8 +223,7 @@ new #[Layout('components.layouts.auth')] class extends Component {
                     </form>
 
                     <div class="mt-8 pt-6 border-t border-slate-700 text-center">
-                        <a href="#" class="text-teal-400 text-sm hover:text-teal-300 transition-colors">Aviso de privacidad</a>
-                    </div>
+                        
                 </div>
             </div>
         </div>

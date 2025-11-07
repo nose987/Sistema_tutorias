@@ -22,70 +22,15 @@ new #[Layout('components.layouts.auth')] class extends Component {
     }
 }; ?>
 
-<div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: #f9fafb; overflow: auto; z-index: 9999;">
+<div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: #ffffff; overflow: auto; z-index: 9999;">
     <div style="min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 1rem;">
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; width: 100%; max-width: 1200px;">
             
-            <!-- Left side - Illustration -->
+            <!-- Left side - Image -->
             <div style="display: flex; flex-direction: column; justify-content: space-between; padding: 2rem 0;">
                 <div style="flex: 1; display: flex; align-items: center; justify-content: center;">
                     <div style="width: 100%; max-width: 450px;">
-                        <svg viewBox="0 0 500 400" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
-                            <!-- Fondo decorativo -->
-                            <circle cx="250" cy="200" r="120" fill="#E0F2FE" opacity="0.3"/>
-                            <circle cx="250" cy="200" r="90" fill="#BAE6FD" opacity="0.3"/>
-                            
-                            <!-- Candado grande central -->
-                            <rect x="210" y="180" width="80" height="90" rx="8" fill="#0F172A"/>
-                            <rect x="220" y="190" width="60" height="70" rx="4" fill="#1E293B"/>
-                            <circle cx="250" cy="220" r="12" fill="#14B8A6"/>
-                            <rect x="246" y="220" width="8" height="25" rx="2" fill="#14B8A6"/>
-                            
-                            <!-- Arco del candado -->
-                            <path d="M230 180 Q230 140 250 140 Q270 140 270 180" 
-                                  stroke="#0F172A" 
-                                  stroke-width="12" 
-                                  fill="none" 
-                                  stroke-linecap="round"/>
-                            
-                            <!-- Llave flotante -->
-                            <g transform="translate(320, 160) rotate(25)">
-                                <circle cx="0" cy="0" r="15" fill="#14B8A6"/>
-                                <circle cx="0" cy="0" r="8" fill="#0F172A"/>
-                                <rect x="0" y="-3" width="40" height="6" rx="2" fill="#14B8A6"/>
-                                <rect x="30" y="-8" width="6" height="8" fill="#14B8A6"/>
-                                <rect x="38" y="-8" width="6" height="8" fill="#14B8A6"/>
-                            </g>
-                            
-                            <!-- Sobre de email -->
-                            <g transform="translate(150, 100)">
-                                <rect x="0" y="0" width="80" height="50" rx="4" fill="#E2E8F0"/>
-                                <path d="M0 0 L40 25 L80 0" fill="#CBD5E1"/>
-                                <rect x="15" y="30" width="50" height="3" rx="1" fill="#94A3B8"/>
-                                <rect x="15" y="38" width="35" height="3" rx="1" fill="#94A3B8"/>
-                            </g>
-                            
-                            <!-- Iconos de seguridad flotantes -->
-                            <g transform="translate(350, 250)">
-                                <circle cx="0" cy="0" r="20" fill="#A7F3D0" opacity="0.6"/>
-                                <path d="M-6 -2 L-2 2 L6 -6" stroke="#10B981" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-                            </g>
-                            
-                            <g transform="translate(140, 280)">
-                                <circle cx="0" cy="0" r="18" fill="#DBEAFE" opacity="0.6"/>
-                                <rect x="-5" y="-8" width="10" height="12" rx="2" fill="#3B82F6"/>
-                                <rect x="-3" y="-2" width="6" height="8" rx="1" fill="#60A5FA"/>
-                            </g>
-                            
-                            <!-- Elementos decorativos -->
-                            <circle cx="380" cy="120" r="8" fill="#E2E8F0"/>
-                            <circle cx="120" cy="200" r="6" fill="#CBD5E1"/>
-                            <circle cx="400" cy="280" r="10" fill="#E2E8F0"/>
-                            
-                            <!-- Líneas de conexión -->
-                            <path d="M230 150 Q200 120 170 120" stroke="#CBD5E1" stroke-width="2" stroke-dasharray="5,5" fill="none"/>
-                            <path d="M280 220 Q320 220 340 240" stroke="#CBD5E1" stroke-width="2" stroke-dasharray="5,5" fill="none"/>
-                        </svg>
+                        <img src="{{ asset('images/cerdito.jpg') }}" alt="Cerdito" style="width: 100%; height: auto; object-fit: contain;">
                     </div>
                 </div>
 
@@ -169,7 +114,7 @@ new #[Layout('components.layouts.auth')] class extends Component {
 
                     <!-- Privacy -->
                     <div class="mt-4 text-center">
-                        <a href="#" class="text-teal-400 text-xs hover:text-teal-300 transition-colors">Aviso de privacidad</a>
+                       
                     </div>
                 </div>
             </div>
