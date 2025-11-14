@@ -30,7 +30,7 @@
                             Gestiona grupos, alumnos y observaciones por cuatrimestre.
                         </p>
                     </div>
-                    <a href="#"
+                    <a href="{{ route ('grupo') }}"
                         class="block w-full bg-teal-700 hover:bg-teal-800 text-white text-sm font-medium text-center p-3 rounded-b-lg transition-colors">
                         Acceder al Módulo
                     </a>
@@ -48,14 +48,13 @@
                                         d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
                                 </svg>
                             </div>
-                            <h2 class="text-lg font-semibold text-gray-800 dark:text-neutral-100">Encuestas y
-                                Actividades</h2>
+                            <h2 class="text-lg font-semibold text-gray-800 dark:text-neutral-100">Actividades</h2>
                         </div>
                         <p class="text-sm text-gray-600 dark:text-neutral-400">
-                            Crea encuestas, registra pláticas y genera reportes.
+                            Registra pláticas, actividades y genera reportes.
                         </p>
                     </div>
-                    <a href="#"
+                    <a href="{{ route ('actividades') }}"
                         class="block w-full bg-teal-700 hover:bg-teal-800 text-white text-sm font-medium text-center p-3 rounded-b-lg transition-colors">
                         Acceder al Módulo
                     </a>
@@ -80,7 +79,7 @@
                             Genera canalizaciones e informes finales del cuatrimestre.
                         </p>
                     </div>
-                    <a href="#"
+                    <a href="{{ route ('canalizaciones') }}"
                         class="block w-full bg-teal-700 hover:bg-teal-800 text-white text-sm font-medium text-center p-3 rounded-b-lg transition-colors">
                         Acceder al Módulo
                     </a>
@@ -105,7 +104,7 @@
                             Administra empresas y opciones de estadía de alumnos.
                         </p>
                     </div>
-                    <a href="#"
+                    <a href="{{ route ('estadias') }}"
                         class="block w-full bg-teal-700 hover:bg-teal-800 text-white text-sm font-medium text-center p-3 rounded-b-lg transition-colors">
                         Acceder al Módulo
                     </a>
@@ -120,7 +119,7 @@
 
                     <div class="flex flex-col md:flex-row md:space-x-4 space-y-3 md:space-y-0">
 
-                        <a href="#"
+                        <a href="{{ route ('grupo') }}"
                             class="flex-1 flex items-center justify-center space-x-2 px-4 py-2 text-sm font-medium text-gray-700 dark:text-neutral-200 bg-white dark:bg-neutral-700 border border-gray-300 dark:border-neutral-600 rounded-lg shadow-sm hover:bg-gray-50 dark:hover:bg-neutral-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition-colors">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-500 dark:text-neutral-400"
                                 fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -130,14 +129,14 @@
                             <span>Ver Grupos Actuales</span>
                         </a>
 
-                        <a href="#"
+                        <a href="{{ route ('encuestas') }}"
                             class="flex-1 flex items-center justify-center space-x-2 px-4 py-2 text-sm font-medium text-gray-700 dark:text-neutral-200 bg-white dark:bg-neutral-700 border border-gray-300 dark:border-neutral-600 rounded-lg shadow-sm hover:bg-gray-50 dark:hover:bg-neutral-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition-colors">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-500 dark:text-neutral-400"
                                 fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                             </svg>
-                            <span>Crear Encuesta</span>
+                            <span>Información de Encuesta</span>
                         </a>
 
                         <a href="#"
