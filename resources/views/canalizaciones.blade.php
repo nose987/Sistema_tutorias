@@ -103,28 +103,28 @@
                                         <tr
                                             class="bg-white dark:bg-neutral-900 border-b dark:border-neutral-700 hover:bg-gray-50 dark:hover:bg-neutral-800">
 
-                                            {{-- 1. Alumno (Usando el Accessor 'nombre_completo') --}}
+                                            
                                             <th scope="row"
                                                 class="px-6 py-4 font-medium text-gray-900 dark:text-neutral-100 whitespace-nowrap">
                                                 {{ $canalizacion->alumno->nombre_completo }}
                                             </th>
 
-                                            {{-- 2. Grupo (Desde la relación anidada) --}}
+                                            
                                             <td class="px-6 py-4">
                                                 {{ $canalizacion->alumno->grupo->nombre_grupo }}
                                             </td>
 
-                                            {{-- 3. Motivo (Desde la relación) --}}
+                                            
                                             <td class="px-6 py-4">
                                                 {{ $canalizacion->motivo->nombre }}
                                             </td>
 
-                                            {{-- 4. Fecha (Formateada con Carbon) --}}
+                                            
                                             <td class="px-6 py-4">
                                                 {{ \Carbon\Carbon::parse($canalizacion->fecha_inicio)->format('d-m-Y') }}
                                             </td>
 
-                                            {{-- 5. Opciones (Estáticas por ahora) --}}
+                                   
                                             <td class="px-6 py-4">
                                                 <div class="flex justify-end items-center space-x-4">
                                                     <a href="{{ route('canalizaciones.show', $canalizacion) }}"
@@ -150,7 +150,7 @@
                                             </td>
                                         </tr>
                                     @empty
-                                        {{-- Mensaje por si no hay canalizaciones --}}
+                                        
                                         <tr class="bg-white dark:bg-neutral-900 border-b dark:border-neutral-700">
                                             <td colspan="5"
                                                 class="px-6 py-4 text-center text-gray-500 dark:text-neutral-400">
@@ -163,10 +163,7 @@
                         </div>
                     </div>
 
-                    {{-- 
-  Busca el div de tu pestaña de Bajas, 
-  probablemente se vea así:
---}}
+        
                     <div x-show="activeTab === 'bajas'"
                         class="bg-white dark:bg-neutral-900 p-6 rounded-lg shadow-sm border border-gray-200 dark:border-neutral-700">
                         <div>
@@ -191,28 +188,28 @@
                                         <tr
                                             class="bg-white dark:bg-neutral-900 border-b dark:border-neutral-700 hover:bg-gray-50 dark:hover:bg-neutral-800">
 
-                                            {{-- 1. Alumno (de la relación) --}}
+                                            
                                             <th scope="row"
                                                 class="px-6 py-4 font-medium text-gray-900 dark:text-neutral-100 whitespace-nowrap">
                                                 {{ $baja->alumno->nombre_completo ?? 'Alumno no disponible' }}
                                             </th>
 
-                                            {{-- 2. Grupo (de la relación anidada) --}}
+                                           
                                             <td class="px-6 py-4">
                                                 {{ $baja->alumno->grupo->nombre_grupo ?? 'N/A' }}
                                             </td>
 
-                                            {{-- 3. Motivo (de la relación) --}}
+                                           
                                             <td class="px-6 py-4">
                                                 {{ $baja->motivoBaja->nombre ?? 'Motivo no disponible' }}
                                             </td>
 
-                                            {{-- 4. Fecha (del registro de baja) --}}
+                                            
                                             <td class="px-6 py-4">
                                                 {{ \Carbon\Carbon::parse($baja->fecha)->format('d-m-Y') }}
                                             </td>
 
-                                            {{-- 5. Estatus (del registro de baja) --}}
+                                            
                                             <td class="px-6 py-4">
                                                 <a href="{{ route('alumnos.historial', $canalizacion->alumno) }}"
                                                     class="text-gray-500 dark:text-neutral-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
@@ -227,7 +224,7 @@
                                             </td>
                                         </tr>
                                     @empty
-                                        {{-- Mensaje por si no hay bajas --}}
+                                        
                                         <tr class="bg-white dark:bg-neutral-900 border-b dark:border-neutral-700">
                                             <td colspan="5"
                                                 class="px-6 py-4 text-center text-gray-500 dark:text-neutral-400">
