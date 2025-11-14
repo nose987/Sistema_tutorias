@@ -94,29 +94,7 @@ Route::post('encuestas/settings', [DashboardEncuestaController::class, 'updateAl
     ->middleware(['auth', 'verified'])
     ->name('encuestas.settings.update');
 
-Route::get('actividades', [ActividadController::class, 'index'])
-    ->middleware(['auth', 'verified'])
-    ->name('actividades');
 
-Route::get('actividades/create', [ActividadController::class, 'create'])
-    ->middleware(['auth', 'verified'])
-    ->name('actividades.create');
-
-Route::post('actividades', [ActividadController::class, 'store'])
-    ->middleware(['auth', 'verified'])
-    ->name('actividades.store');
-
-Route::get('actividades/{actividad:pk_actividad}', [ActividadController::class, 'show'])
-    ->middleware(['auth', 'verified'])
-    ->name('actividades.show');
-
-Route::get('actividades/{actividad:pk_actividad}/edit', [ActividadController::class, 'edit'])
-    ->middleware(['auth', 'verified'])
-    ->name('actividades.edit');
-
-Route::put('actividades/{actividad:pk_actividad}', [ActividadController::class, 'update'])
-    ->middleware(['auth', 'verified'])
-    ->name('actividades.update');
 
 Route::get('encuesta/{alumno}', [EncuestaController::class, 'show'])
     ->middleware(['auth', 'verified'])
