@@ -1,16 +1,11 @@
-{{-- resources/views/canalizaciones-formato.blade.php --}}
 <x-layouts.app :title="__('Llenar Formato de Canalización')">
 
-    {{-- 
-      Esta vista espera que el controlador le pase las variables 
-      $canalizacion y $canalizacion->alumno
-    --}}
 
     <div class="bg-slate-50 dark:bg-[#262626] p-6 md:p-8">
         <div class="max-w-5xl mx-auto">
 
             <header class="mb-6">
-                {{-- Link para volver a la lista principal de canalizaciones --}}
+                
                 <a href="{{ route('canalizaciones') }}"
                     class="flex items-center space-x-1 text-sm font-medium text-gray-600 dark:text-neutral-400 hover:text-gray-900 dark:hover:text-neutral-100 mb-2">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
@@ -26,13 +21,11 @@
                 <p class="text-sm text-gray-500 dark:text-neutral-400 mt-1">CÓDIGO: TUTOR-TUR-1A-04-00-150-2024</p>
             </header>
 
-            {{-- Apuntamos la acción a la ruta 'storeFormato', pasando la canalización --}}
+         
             <form action="{{ route('canalizaciones.formato.store', $canalizacion) }}" method="POST" class="space-y-6">
                 @csrf
 
-                {{-- ============================================= --}}
-                {{-- BLOQUE DE RESUMEN DE ERRORES (NUEVO)          --}}
-                {{-- ============================================= --}}
+                
                 @if ($errors->any())
                     <div class="rounded-md border border-red-400 bg-red-50 p-4 dark:bg-red-900/30">
                         <div class="flex">
@@ -58,18 +51,13 @@
                         </div>
                     </div>
                 @endif
-                {{-- ============================================= --}}
-                {{-- FIN DEL BLOQUE DE ERRORES                     --}}
-                {{-- ============================================= --}}
+             
 
 
                 <div
                     class="bg-white dark:bg-neutral-900 rounded-lg shadow-sm border border-gray-200 dark:border-neutral-700 p-6 md:p-8">
 
-                    {{-- 
-                      NOTA: Tu BD vincula 'formato_canalizacion' con 'fk_alumno'.
-                      Este input oculto se usará en el controlador.
-                    --}}
+                    
                     
 
                     <h2 class="text-lg font-semibold text-gray-800 dark:text-neutral-100 mb-4">Datos del Alumno</h2>
@@ -145,7 +133,7 @@
                     class="bg-white dark:bg-neutral-900 rounded-lg shadow-sm border border-gray-200 dark:border-neutral-700 p-6 md:p-8">
                     <h2 class="text-xl font-semibold text-gray-800 dark:text-neutral-100 mb-4">Motivo</h2>
 
-                    {{-- Resaltamos la caja del motivo principal seleccionado en el modal --}}
+                    
                     @php
                         $motivoPrincipal = strtolower($canalizacion->motivo->nombre);
                     @endphp
