@@ -113,10 +113,10 @@
                                 class="block w-full text-left px-4 py-3 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-700 rounded-lg text-sm font-medium text-gray-700 dark:text-neutral-200 hover:bg-gray-50 dark:hover:bg-neutral-700 transition-colors focus:outline-none focus:ring-2 focus:ring-teal-500">
                                 Ver Historial Completo
                             </a>
-                            <button type="button"
-                                class="w-full text-left px-4 py-3 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-700 rounded-lg text-sm font-medium text-gray-700 dark:text-neutral-200 hover:bg-gray-50 dark:hover:bg-neutral-700 transition-colors focus:outline-none focus:ring-2 focus:ring-teal-500">
-                                Ver Perfil del Alumno
-                            </button>
+                            <a href="{{ route ('detalle_alumno', $canalizacion->alumno)}}"
+                                class="block w-full text-left px-4 py-3 bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-700 rounded-lg text-sm font-medium text-gray-700 dark:text-neutral-200 hover:bg-gray-50 dark:hover:bg-neutral-700 transition-colors focus:outline-none focus:ring-2 focus:ring-teal-500">
+                                Ver Perfil del ALumno
+                            </a>
                             <button type="button" @click="modalBaja = true "
                                 class="w-full text-left px-4 py-3 bg-red-50 dark:bg-red-900/30 border border-red-300 dark:border-red-700 rounded-lg text-sm font-medium text-red-700 dark:text-red-300 hover:bg-red-100 dark:hover:bg-red-900/50 transition-colors focus:outline-none focus:ring-2 focus:ring-red-500">
                                 Dar de Baja al Alumno

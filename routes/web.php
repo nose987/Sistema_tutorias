@@ -178,20 +178,24 @@ Route::view('historial_canalizaciones', 'historial_canalizaciones')
     ->middleware(['auth', 'verified'])
     ->name('historial_canalizaciones');
 
-Route::post('/canalizaciones/{canalizacion}/seguimiento', [App\Http\Controllers\CanalizacionController::class, 'storeSeguimiento'])
+Route::post('/canalizaciones/{canalizacion}/seguimiento', [CanalizacionController::class, 'storeSeguimiento'])
     ->name('canalizaciones.seguimiento.store');
 
-Route::get('/alumnos/{alumno}/historial', [App\Http\Controllers\CanalizacionController::class, 'showHistorial'])
+Route::get('/alumnos/{alumno}/historial', [CanalizacionController::class, 'showHistorial'])
     ->name('alumnos.historial');
 
-Route::post('/alumnos/{alumno}/baja', [App\Http\Controllers\CanalizacionController::class, 'darDeBaja'])
+Route::post('/alumnos/{alumno}/baja', [CanalizacionController::class, 'darDeBaja'])
     ->name('alumnos.baja');
 
 Route::get('/reportes/canalizaciones-final', [CanalizacionController::class, 'exportarInformeFinalPlantilla'])
     ->name('canalizaciones.reporte.final');
 
+Route::get('/reportes/canalizaciones-informe-final-pdf', [CanalizacionController::class, 'exportarInformeFinalPDF'])
+         ->name('canalizaciones.reporte.finalPdf');
+
 Route::get('/canalizaciones/{canalizacion}/pdf', [CanalizacionController::class, 'exportarFormatoPDF'])
     ->name('canalizaciones.formato.pdf');
+//finalizan las rutas de canalizacion
 
 Route::get('estadias', function () {
     $alumnos = Alumno::with('opcionesEstadia.empresa')->get();
