@@ -211,7 +211,7 @@
 
                                             
                                             <td class="px-6 py-4">
-                                                <a href="{{ route('alumnos.historial', $canalizacion->alumno) }}"
+                                                <a href="{{ route('alumnos.historial', $baja->alumno) }}"
                                                     class="text-gray-500 dark:text-neutral-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
                                                         viewBox="0 0 20 20" fill="currentColor">
