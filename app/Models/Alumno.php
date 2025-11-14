@@ -37,7 +37,7 @@ class Alumno extends Model
         'contacto_emergencia_nombre',
         'contacto_emergencia_telefono',
         'contacto_emergencia_celular',
-        'correo',
+ //       'correo',
         'direccion',
         'estatus',
     ];
