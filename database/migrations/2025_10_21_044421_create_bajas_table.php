@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('bajas', function (Blueprint $table) {
             $table->integer('pk_bajas', true);
-            $table->integer('fk_alumno')->nullable()->index('fk_alumno');
-            $table->integer('fk_motivo_baja')->nullable()->index('fk_motivo_baja');
+            $table->integer('fk_alumno')->nullable();
+            $table->integer('fk_motivo_baja')->nullable();
             $table->date('fecha')->nullable();
             $table->enum('estatus', ['Activa', 'Cerrada'])->nullable()->default('Activa');
         });

@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('canalizacion', function (Blueprint $table) {
             $table->integer('pk_canalizacion', true);
-            $table->integer('fk_alumno')->nullable()->index('fk_alumno');
-            $table->integer('fk_motivo_canalizacion')->nullable()->index('fk_motivo');
+            $table->integer('fk_alumno')->nullable();
+            $table->integer('fk_motivo_canalizacion')->nullable();
             $table->date('fecha_inicio')->nullable();
             $table->date('fecha_final')->nullable();
             $table->enum('estatus', ['Activa', 'Cerrada'])->nullable()->default('Activa');

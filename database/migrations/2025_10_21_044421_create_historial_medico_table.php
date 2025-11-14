@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('historial_medico', function (Blueprint $table) {
             $table->integer('pk_historial_medico', true);
-            $table->integer('fk_alumno')->nullable()->index('fk_alumno');
+            $table->integer('fk_alumno')->nullable();
             $table->string('tipo_sangre', 5)->nullable();
             $table->boolean('check_alergia')->nullable()->default(false);
             $table->boolean('check_asma')->nullable()->default(false);

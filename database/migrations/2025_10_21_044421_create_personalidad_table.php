@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('personalidad', function (Blueprint $table) {
             $table->integer('pk_personalidad', true);
-            $table->integer('fk_alumno')->nullable()->index('fk_alumno');
+            $table->integer('fk_alumno')->nullable();
             $table->text('autodescripcion')->nullable()->comment('¿Cómo te describirías a ti mismo/a?');
             $table->text('como_lo_ven_demas')->nullable()->comment('¿Cómo crees que te ven los demás?');
             $table->text('gusta_mas_de_si')->nullable()->comment('¿Qué es lo que más te gusta de ti?');

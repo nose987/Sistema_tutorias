@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('antecedentes_escolares', function (Blueprint $table) {
             $table->integer('pk_antecedentes_escolares', true);
-            $table->integer('fk_alumno')->nullable()->index('fk_alumno');
+            $table->integer('fk_alumno')->nullable();
             $table->string('institucion_preparatoria', 100)->nullable()->comment('Institución en la que cursó Preparatoria');
             $table->decimal('promedio', 4)->nullable();
             $table->string('ciclo_preparatoria', 100)->nullable()->comment('Ciclo de preparatoria');

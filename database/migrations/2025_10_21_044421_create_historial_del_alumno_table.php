@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('historial_del_alumno', function (Blueprint $table) {
             $table->integer('pk_historial_del_alumno', true);
-            $table->integer('fk_alumno')->nullable()->index('fk_alumno');
-            $table->integer('fk_historial_medico')->nullable()->index('fk_historial_medico');
+            $table->integer('fk_alumno')->nullable();
+            $table->integer('fk_historial_medico')->nullable();
             $table->enum('estatus', ['Activo', 'Inactivo'])->nullable()->default('Activo');
         });
     }

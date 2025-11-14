@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('formato_canalizacion', function (Blueprint $table) {
             $table->integer('pk_formato_canalizacion', true);
-            $table->integer('fk_alumno')->nullable()->index('fk_alumno');
+            $table->integer('fk_alumno')->nullable();
             $table->date('fecha_canalizacion')->nullable();
             $table->string('tutor_nombre')->nullable()->comment('Nombre del Tutor(a)');
             $table->string('carrera', 150)->nullable()->comment('Carrera del alumno');

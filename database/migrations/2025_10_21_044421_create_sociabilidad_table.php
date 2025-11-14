@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('sociabilidad', function (Blueprint $table) {
             $table->integer('pk_sociabilidad', true);
-            $table->integer('fk_alumno')->nullable()->index('fk_alumno');
+            $table->integer('fk_alumno')->nullable();
             $table->text('relacion_padres')->nullable()->comment('¿Qué tal te llevas con tus padres?');
             $table->text('relacion_hermanos')->nullable()->comment('¿Y con tus hermanos?');
             $table->boolean('gusta_tiempo_familia')->nullable()->comment('¿Te gusta pasar tiempo con la familia?');

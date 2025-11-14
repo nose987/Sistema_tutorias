@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('potencial_aprendizaje', function (Blueprint $table) {
             $table->integer('pk_potencial_aprendizaje', true);
-            $table->integer('fk_alumno')->nullable()->index('fk_alumno');
+            $table->integer('fk_alumno')->nullable();
             $table->text('aspectos_propician_aprendizaje')->nullable()->comment('Aspectos que propician tu aprendizaje');
             $table->text('aspectos_dificultan_aprendizaje')->nullable()->comment('Aspectos que dificultan tu aprendizaje');
             $table->text('razones_para_estudiar')->nullable()->comment('¿Cuáles son tus razones para estudiar?');

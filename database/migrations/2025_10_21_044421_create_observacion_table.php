@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('observacion', function (Blueprint $table) {
             $table->integer('pk_observacion', true);
-            $table->integer('fk_alumno')->nullable()->index('fk_alumno');
+            $table->integer('fk_alumno')->nullable();
             $table->string('nombre', 150)->nullable();
             $table->text('observacion')->nullable();
         });
