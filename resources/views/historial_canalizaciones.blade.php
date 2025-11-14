@@ -1,11 +1,11 @@
 <x-layouts.app :title="__('Historial de canalizaciones')">
-    {{-- CAMBIO: Fondo de página más claro --}}
+    
     <div class="bg-slate-50 dark:bg-neutral-800">
 
         <div class="max-w-7xl mx-auto p-6 md:p-8">
 
             <header class="mb-6">
-                {{-- Link para volver (ajusta la ruta si tienes un perfil de alumno) --}}
+                
                 <a href="{{ url()->previous() }}"
                     class="flex items-center space-x-1 text-sm font-medium text-gray-600 dark:text-neutral-400 hover:text-gray-900 dark:hover:text-neutral-100 mb-2">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
@@ -17,31 +17,31 @@
                 <h1 class="text-3xl font-bold text-gray-900 dark:text-neutral-100">
                     Historial de Canalizaciones
                 </h1>
-                {{-- DATOS DINÁMICOS --}}
+                
                 <p class="text-sm text-gray-500 dark:text-neutral-400 mt-1">{{ $alumno->nombre_completo }} - {{ $alumno->pk_alumno }}</p>
             </header>
 
-            {{-- STATS DINÁMICAS --}}
+            
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                {{-- CAMBIO: Tarjetas más oscuras --}}
+                
                 <div
                     class="bg-white dark:bg-neutral-900 p-5 rounded-lg shadow-sm border border-gray-200 dark:border-neutral-700">
                     <p class="text-sm font-medium text-gray-500 dark:text-neutral-400">Total de Canalizaciones</p>
                     <p class="text-3xl font-bold text-gray-900 dark:text-neutral-100 mt-1">{{ $totalCanalizaciones }}</p>
                 </div>
-                {{-- CAMBIO: Tarjetas más oscuras --}}
+                
                 <div
                     class="bg-white dark:bg-neutral-900 p-5 rounded-lg shadow-sm border border-gray-200 dark:border-neutral-700">
                     <p class="text-sm font-medium text-gray-500 dark:text-neutral-400">En Proceso</p>
                     <p class="text-3xl font-bold text-green-600 dark:text-green-500 mt-1">{{ $totalActivas }}</p>
                 </div>
-                {{-- CAMBIO: Tarjetas más oscuras --}}
+                
                 <div
                     class="bg-white dark:bg-neutral-900 p-5 rounded-lg shadow-sm border border-gray-200 dark:border-neutral-700">
                     <p class="text-sm font-medium text-gray-500 dark:text-neutral-400">Cerradas</p>
                     <p class="text-3xl font-bold text-gray-700 dark:text-neutral-300 mt-1">{{ $totalCerradas }}</p>
                 </div>
-                {{-- CAMBIO: Tarjetas más oscuras --}}
+                
                 <div
                     class="bg-white dark:bg-neutral-900 p-5 rounded-lg shadow-sm border border-gray-200 dark:border-neutral-700">
                     <p class="text-sm font-medium text-gray-500 dark:text-neutral-400">Motivo Más Frecuente</p>
@@ -54,13 +54,13 @@
                 <p class="text-sm text-gray-500 dark:text-neutral-400">Historial completo de canalizaciones del alumno
                 </p>
 
-                {{-- INICIO DEL BUCLE DE CANALIZACIONES --}}
+                
                 <div class="mt-6 space-y-6">
                     @forelse ($canalizaciones as $canalizacion)
                         @php
                             $formato = $canalizacion->formato; 
                         @endphp
-                        {{-- CAMBIO: Tarjeta más oscura --}}
+                        
                         <div
                             class="bg-white dark:bg-neutral-900 p-6 rounded-lg shadow-sm border border-gray-200 dark:border-neutral-700">
                             <div class="flex justify-between items-center mb-4">
@@ -70,7 +70,7 @@
                                             Canalización #{{ $canalizacion->pk_canalizacion }}
                                         </a>
                                     </h3>
-                                    {{-- Estatus dinámico --}}
+                                    
                                     @if ($canalizacion->estatus == 'Activa')
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200">
                                             En Proceso
@@ -82,7 +82,7 @@
                                     @endif
                                 </div>
                                 <div class="flex items-center space-x-3">
-                                    {{-- Botones (puedes añadir la funcionalidad de descarga si la tienes) --}}
+                                    
                                 </div>
                             </div>
                             <p class="text-sm text-gray-500 dark:text-neutral-400 mb-4">
@@ -125,7 +125,7 @@
                                 </div>
                             </div>
 
-                            {{-- SECCIÓN DE SEGUIMIENTOS (SI EXISTE EL FORMATO Y TIENE SEGUIMIENTOS) --}}
+                            
                             @if ($formato && $formato->seguimientos->count() > 0)
                                 <div class="mt-6 pt-4 border-t border-gray-200 dark:border-neutral-700">
                                     <details>
@@ -154,8 +154,7 @@
                             @endif
                         </div>
                     @empty
-                        {{-- Mensaje si no hay canalizaciones --}}
-                        {{-- CAMBIO: Tarjeta más oscura --}}
+                       
                         <div
                             class="bg-white dark:bg-neutral-900 p-6 rounded-lg shadow-sm border border-gray-200 dark:border-neutral-700">
                             <p class="text-center text-gray-500 dark:text-neutral-400">Este alumno no tiene
@@ -163,7 +162,7 @@
                         </div>
                     @endforelse
                 </div>
-                {{-- FIN DEL BUCLE --}}
+                
             </div>
 
         </div>
