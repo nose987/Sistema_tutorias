@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('correo', 100)->nullable();
             $table->text('direccion')->nullable();
             $table->enum('estatus', ['Activa', 'Inactiva'])->nullable()->default('Activa');
+            $table->string('nombre_contacto')->nullable();
+            $table->text('notas')->nullable();
         });
     }
 
