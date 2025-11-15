@@ -194,15 +194,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
             'notas' => 'nullable|string',
         ]);
 
+        // ==========================================================
+        //              AQUÍ ESTÁ LA CORRECCIÓN
+        // Se quitaron 'nombre_contacto' y 'notas' del create()
+        // ==========================================================
         Empresa::create([
             'nombre' => $request->input('nombre_empresa'),
-            'nombre_contacto' => $request->input('nombre_contacto'),
             'tel' => $request->input('telefono'),
             'correo' => $request->input('email'),
             'direccion' => $request->input('direccion'),
-            'notas' => $request->input('notas'),
             'estatus' => 'Activa'
         ]);
+        // ==========================================================
 
         return redirect()->route('estadias')->with('success', '¡Empresa registrada con éxito!');
     })->name('empresas.store');

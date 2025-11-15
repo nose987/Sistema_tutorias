@@ -51,9 +51,9 @@
                         type="text" 
                         id="nombre_empresa"
                         name="nombre_empresa"
-                        placeholder="Ej: RedPetroil"
+                        placeholder="Ingresa el nombre de la empresa"
                         value="{{ old('nombre_empresa') }}"
-                        maxlength="50"
+                        maxlength="50" {{-- Ajustado al max de la validación --}}
                         class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent placeholder-gray-500 @error('nombre_empresa') border-red-500 @enderror"
                     />
                     
@@ -62,42 +62,28 @@
                     @enderror
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label for="nombre_contacto" class="block text-gray-900 dark:text-gray-200 font-semibold mb-2">Nombre del Contacto</label>
-                        <input 
-                            type="text" 
-                            id="nombre_contacto"
-                            name="nombre_contacto"
-                            placeholder="Ej: Ing. Roberto Martínez"
-                            value="{{ old('nombre_contacto') }}" 
-                            maxlength="50"
-                            class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent placeholder-gray-500 @error('nombre_contacto') border-red-500 @enderror"
-                        />
-                        @error('nombre_contacto')
-                            <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
-                        @enderror
-                    </div>
-<div>
+                <!-- CAMPO DE CONTACTO ELIMINADO -->
+                
+                <!-- CAMPO DE TELÉFONO AHORA OCUPA ANCHO COMPLETO -->
+                <div>
+                    <label for="telefono" class="block text-gray-900 dark:text-gray-200 font-semibold mb-2">Teléfono</label>
+                    <input 
+                        type="tel"
+                        id="telefono"
+                        name="telefono"
+                        placeholder="Ingresa un número de teléfono"
+                        value="{{ old('telefono') }}"
+                        maxlength="10" {{-- Ajustado al max de la validación --}}
+                        pattern="[0-9]{10,20}"
+                        inputmode="numeric"
+                        class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent placeholder-gray-500 @error('telefono') border-red-500 @enderror"
+                    />
 
-<label for="telefono" class="block text-gray-900 dark:text-gray-200 font-semibold mb-2">Teléfono</label>
-<input 
-    type="tel"
-    id="telefono"
-    name="telefono"
-    placeholder="Ingresa un número de teléfono"
-    value="{{ old('telefono') }}"
-    maxlength="10"
-    pattern="[0-9]{10}"
-    inputmode="numeric"
-    class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent placeholder-gray-500 @error('telefono') border-red-500 @enderror"
-/>
-
-@error('telefono')
-    <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
-@enderror
-</div>
+                    @error('telefono')
+                        <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
+                    @enderror
                 </div>
+                
 
                 
                 <div>
@@ -107,9 +93,9 @@
                         type="email" 
                         id="email"
                         name="email"
-                        placeholder="contacto@empresa.com"
+                        placeholder="Ingresa el correo electrónico de la empresa"
                         value="{{ old('email') }}"
-                        maxlength="50"
+                        maxlength="50" {{-- Ajustado al max de la validación --}}
                         class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent placeholder-gray-500 @error('email') border-red-500 @enderror"
                     />
                     
@@ -127,30 +113,23 @@
                         name="direccion"
                         placeholder="Dirección de la empresa"
                         value="{{ old('direccion') }}"
-                        maxlength="100"
+                        maxlength="50"
                         class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent placeholder-gray-500"
                     />
+                     @error('direccion')
+                        <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 
-                <div>
-                    <label for="notas" class="block text-gray-900 dark:text-gray-200 font-semibold mb-2">Notas Adicionales (Opcional)</label>
-                    <textarea 
-                        id="notas"
-                        name="notas"
-                        placeholder="Información adicional sobre la empresa..."
-                        maxlength="100"
-                        rows="5"
-                        class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent placeholder-gray-500 resize-none"
-                    >{{ old('notas') }}</textarea>
-                </div>
+                <!-- CAMPO DE NOTAS ELIMINADO -->
 
                 
                 <div class="flex justify-end gap-4 pt-4">
                     
                     <a 
-                       href="{{ route('estadias') }}"
-                       class="px-6 py-2 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-200 font-semibold rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition cursor-pointer"
+                        href="{{ route('estadias') }}"
+                        class="px-6 py-2 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-200 font-semibold rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition cursor-pointer"
                     >
                         Cancelar
                     </a>

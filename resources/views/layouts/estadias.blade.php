@@ -219,7 +219,8 @@
                     <thead>
                         <tr class="border-b border-gray-200 dark:border-gray-700">
                             <th class="text-left py-3 px-4 font-semibold text-gray-900 dark:text-white">Empresa</th>
-                            <th class="text-left py-3 px-4 font-semibold text-gray-900 dark:text-white">Contacto</th>
+                            <!-- CAMPO ELIMINADO DE LA TABLA -->
+                            {{-- <th class="text-left py-3 px-4 font-semibold text-gray-900 dark:text-white">Contacto</th> --}}
                             <th class="text-left py-3 px-4 font-semibold text-gray-900 dark:text-white">Teléfono</th>
                             <th class="text-left py-3 px-4 font-semibold text-gray-900 dark:text-white">Correo</th>
                             <th class="text-left py-3 px-4 font-semibold text-gray-900 dark:text-white">Acciones</th>
@@ -229,7 +230,8 @@
                         @forelse ($empresas as $empresa)
                             <tr class="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition" data-empresa-id="{{ $empresa->pk_empresa }}">
                                 <td class="py-4 px-4 text-gray-900 dark:text-white" data-field="nombre">{{ $empresa->nombre }}</td>
-                                <td class="py-4 px-4 text-gray-900 dark:text-white" data-field="contacto">{{ $empresa->nombre_contacto ?? 'N/A' }}</td>
+                                <!-- CAMPO ELIMINADO DE LA TABLA -->
+                                {{-- <td class="py-4 px-4 text-gray-900 dark:text-white" data-field="contacto">{{ $empresa->nombre_contacto ?? 'N/A' }}</td> --}}
                                 <td class="py-4 px-4 text-gray-900 dark:text-white" data-field="telefono">{{ $empresa->tel ?? 'N/A' }}</td>
                                 <td class="py-4 px-4 text-gray-900 dark:text-white" data-field="correo">{{ $empresa->correo ?? 'N/A' }}</td>
                                 <td class="py-4 px-4">
@@ -266,8 +268,11 @@
                         </div>
                         <div class="p-6 space-y-4">
                             <div><label for="nombre_empresa" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Nombre de la Empresa</label><input type="text" id="nombre_empresa" x-model="formData.nombre" class="w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg shadow-sm focus:border-teal-500 focus:ring-teal-500" maxlength="50" required ></div>
-                            <div><label for="nombre_contacto" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Nombre de Contacto</label><input type="text" id="nombre_contacto" x-model="formData.nombre_contacto" class="w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg shadow-sm focus:border-teal-500 focus:ring-teal-500" maxlength="50"></div>
-                            <div><label for="tel_empresa" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Teléfono</label><input type="text" id="tel_empresa" x-model="formData.tel" class="w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg shadow-sm focus:border-teal-500 focus:ring-teal-500" maxlength="10" pattern="[0-9]{10}"></div>
+                            
+                            <!-- CAMPO ELIMINADO DEL MODAL -->
+                            {{-- <div><label for="nombre_contacto" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Nombre de Contacto</label><input type="text" id="nombre_contacto" x-model="formData.nombre_contacto" class="w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg shadow-sm focus:border-teal-500 focus:ring-teal-500" maxlength="50"></div> --}}
+                            
+                            <div><label for="tel_empresa" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Teléfono</label><input type="text" id="tel_empresa" x-model="formData.tel" class="w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg shadow-sm focus:border-teal-500 focus:ring-teal-500" maxlength="10" pattern="[0-9]{10,20}"></div>
                             <div><label for="correo_empresa" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Correo Electrónico</label><input type="email" id="correo_empresa" x-model="formData.correo" class="w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg shadow-sm focus:border-teal-500 focus:ring-teal-500" maxlength="50"></div>
                         </div>
                         <div class="px-6 py-4 bg-gray-50 dark:bg-zinc-800 border-t border-gray-200 dark:border-gray-700 flex justify-end gap-3">
@@ -367,20 +372,28 @@
                         this.showModal = false;
                         
                         Swal.fire({ icon: 'success', title: '¡Actualizado!', text: 'Opciones guardadas.', confirmButtonColor: '#0d9488' })
-                           .then(() => refrescarContenidoAlumnos());
+                            .then(() => refrescarContenidoAlumnos());
                         
                     } catch (error) { Swal.fire({ icon: 'error', title: 'Error', text: error.message }); }
                 }
             }
         }
 
-        // FUNCIÓN 4: manageEmpresasModal
+        // FUNCIÓN 4: manageEmpresasModal (CORREGIDA)
         function manageEmpresasModal() {
             return {
-                showModal: false, selectedEmpresa: null, formUrl: '', formData: { nombre: '', nombre_contacto: '', tel: '', correo: '' },
+                showModal: false, selectedEmpresa: null, formUrl: '', 
+                // CORRECCIÓN: Quitado 'nombre_contacto' del formData
+                formData: { nombre: '', tel: '', correo: '' },
+                
                 openModal(empresa) {
                     this.selectedEmpresa = empresa; this.formUrl = `/empresas/${empresa.pk_empresa}`;
-                    this.formData = { nombre: empresa.nombre || "", nombre_contacto: empresa.nombre_contacto || "", tel: empresa.tel || "", correo: empresa.correo || "" };
+                    // CORRECCIÓN: Quitado 'nombre_contacto' de la asignación
+                    this.formData = { 
+                        nombre: empresa.nombre || "", 
+                        tel: empresa.tel || "", 
+                        correo: empresa.correo || "" 
+                    };
                     this.showModal = true;
                 },
                 async saveEmpresa() { 
@@ -409,11 +422,12 @@
                         }
                     }
                 },
+                // CORRECCIÓN: Quitado 'nombre_contacto' de la actualización de la fila
                 updateEmpresaRow(id, data) {
                     const row = document.querySelector(`tr[data-empresa-id="${id}"]`);
                     if (row) {
                         row.querySelector('[data-field="nombre"]').textContent = data.nombre;
-                        row.querySelector('[data-field="contacto"]').textContent = data.nombre_contacto || 'N/A';
+                        // row.querySelector('[data-field="contacto"]').textContent = data.nombre_contacto || 'N/A'; // <- ELIMINADO
                         row.querySelector('[data-field="telefono"]').textContent = data.tel || 'N/A';
                         row.querySelector('[data-field="correo"]').textContent = data.correo || 'N/A';
                     }
