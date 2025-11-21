@@ -229,7 +229,7 @@
                         <thead class="bg-[#2B8A7F] text-xs text-white uppercase">
                             <tr>
                                 <th class="px-6 py-3">Nombre</th>
-                                <th class="px-6 py-3">Correo</th>
+                                <th class="px-6 py-3">Carrera</th>
                                 <th class="px-6 py-3">Estatus</th>
                                 <th class="px-6 py-3 text-right">Acciones</th>
                             </tr>
@@ -241,7 +241,7 @@
                                 <th class="px-6 py-4 font-medium text-gray-900 dark:text-neutral-100 whitespace-nowrap">
                                     {{ trim(($a->nombre ?? '').' '.($a->apellido_paterno ?? '').' '.($a->apellido_materno ?? '')) ?: 'Sin nombre' }}
                                 </th>
-                                <td class="px-6 py-4">{{ $a->correo ?? '—' }}</td>
+                                <td class="px-6 py-4">{{ $a->carrera ?? '—' }}</td>
                                 <td class="px-6 py-4">
                                     @if(($a->estatus ?? '') === 'Activo')
                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200">Activo</span>

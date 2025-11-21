@@ -71,10 +71,8 @@
             </div>
 
             <div>
-              <p class="text-sm text-gray-500 dark:text-neutral-400">Correo Electrónico</p>
-              <p class="font-medium text-gray-900 dark:text-neutral-100 mt-1">
-                {{ $alumno->correo ?? '—' }}
-              </p>
+              <p class="text-sm text-gray-500 dark:text-neutral-400">Carrera</p>
+              <p class="font-medium text-gray-900 dark:text-neutral-100 mt-1">{{ $alumno->carrera ?? '—' }}</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">

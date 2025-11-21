@@ -64,6 +64,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::patch('alumnos/{alumno}/estatus', [AlumnoController::class, 'updateStatus'])->name('alumnos.updateStatus');
     Route::get('alumnos/crear', [AlumnoController::class, 'create'])->name('alumnos.create');
     Route::post('alumnos', [AlumnoController::class, 'store'])->name('alumnos.store');
+    Route::patch('alumnos/{alumno}', [AlumnoController::class, 'update'])->name('alumnos.update');
+
     
     // --- OBSERVACIONES ---
     Route::post('alumnos/{alumno}/observaciones', [ObservacionController::class, 'store'])->name('observaciones.store');

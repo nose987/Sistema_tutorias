@@ -95,14 +95,88 @@
                                 </div>
 
                                 <div>
-                                    <label for="correo" class="block text-sm font-medium text-gray-700 dark:text-neutral-300 mb-2">
-                                        Correo Electrónico
-                                    </label>
-                                    <input type="email" id="correo" name="correo"
-                                           value="{{ old('correo') }}"
-                                           placeholder="alumno@universidad.edu"
-                                           class="w-full px-3 py-2 text-sm border border-gray-300 dark:border-neutral-600 rounded-lg bg-white dark:bg-neutral-800 text-gray-900 dark:text-neutral-100 placeholder-gray-400 dark:placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-colors">
-                                </div>
+    <label for="carrera" class="block text-sm font-medium text-gray-700 dark:text-neutral-300 mb-2">
+        Carrera *
+    </label>
+
+    <div class="flex gap-2 items-center">
+        <select id="carrera_select" name="carrera"
+                required
+                class="w-full px-3 py-2 text-sm border border-gray-300 dark:border-neutral-600 rounded-lg bg-white dark:bg-neutral-800 text-gray-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-teal-500">
+            <option value="">Seleccionar carrera...</option>
+
+            @foreach($carreras as $c)
+                <option value="{{ $c }}" @selected(old('carrera')===$c)>{{ $c }}</option>
+            @endforeach
+
+            <option value="__otra__" @selected(old('carrera')==='__otra__')>Otra...</option>
+        </select>
+
+        <!-- campo opcional para escribir otra carrera (oculto por defecto) -->
+    </div>
+
+    <div id="carrera_otra_wrap" class="mt-2" style="display: none;">
+        <label for="carrera_otra" class="sr-only">Especificar carrera</label>
+        <input type="text" id="carrera_otra" name="carrera_otra"
+               value="{{ old('carrera_otra') }}"
+               placeholder="Especifica la carrera"
+               class="w-full px-3 py-2 text-sm border border-gray-300 dark:border-neutral-600 rounded-lg bg-white dark:bg-neutral-800 text-gray-900 dark:text-neutral-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500">
+        <p class="text-xs text-gray-500 mt-1">Si seleccionas "Otra...", escribe la carrera aquí.</p>
+    </div>
+
+    @error('carrera')
+        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+    @enderror
+</div>
+
+<!-- Al final del form, antes de enviar, añadimos un pequeño script para controlar la visibilidad -->
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const sel = document.getElementById('carrera_select');
+    const otraWrap = document.getElementById('carrera_otra_wrap');
+    const otraInput = document.getElementById('carrera_otra');
+
+    function toggleOtra() {
+        if (!sel) return;
+        if (sel.value === '__otra__') {
+            otraWrap.style.display = 'block';
+            // si el usuario opta por "otra", usamos su texto como valor real en el select antes de submit
+            otraInput.required = true;
+        } else {
+            otraWrap.style.display = 'none';
+            otraInput.required = false;
+        }
+    }
+
+    if (sel) {
+        sel.addEventListener('change', toggleOtra);
+        // inicial_
+        toggleOtra();
+    }
+
+    // Antes del submit: si seleccionó "otra", movemos el valor textual al campo oculto final del formulario.
+    document.querySelector('form').addEventListener('submit', function (e) {
+        if (sel.value === '__otra__') {
+            // reemplazamos el valor de select por el valor escrito
+            if (otraInput.value.trim() === '') {
+                // deja que la validación del navegador/mensaje Laravel maneje el error
+                return;
+            }
+            // crear un input hidden con el valor real (para que el controlador reciba 'carrera')
+            let hidden = document.createElement('input');
+            hidden.type = 'hidden';
+            hidden.name = 'carrera';
+            hidden.value = otraInput.value.trim();
+            this.appendChild(hidden);
+
+            // evitar enviar el select con __otra__ (opcional)
+            sel.disabled = true;
+        }
+    });
+});
+</script>
+@endpush
 
                                 <div>
                                     <label for="telefono" class="block text-sm font-medium text-gray-700 dark:text-neutral-300 mb-2">
