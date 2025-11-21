@@ -9,7 +9,7 @@
         </div>
       @endif
 
-      {{-- Back: vuelve al detalle del grupo del alumno --}}
+      {{-- iuekbrfiehrbvieukfvhbreiurkbv --}}
       <div class="flex items-center gap-4 mb-6">
         <a href="{{ route('detalle_grupo', $alumno->fk_grupo) }}"
           class="flex items-center space-x-2 px-3 py-2 text-sm font-medium text-gray-700 dark:text-neutral-300 hover:text-gray-900 dark:hover:text-neutral-100 transition-colors">
